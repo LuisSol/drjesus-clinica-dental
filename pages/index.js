@@ -1,9 +1,20 @@
-import MainLayout from '../src/components/MainLayout'
+import styled from 'styled-components';
 
-export default function Home() {
+import MainLayout from '../src/components/MainLayout';
+import Hero from '../src/components/Hero'
+
+const MainContainer = styled.div`
+  width: 100%;
+`
+
+const Home = () => {
   return (
     <MainLayout title="Inicio">
-      <h1>Hello next development branchjs</h1>
+      <MainContainer>
+        <Hero />
+      </MainContainer>
     </MainLayout>  
   )
 }
+
+export default Home;
