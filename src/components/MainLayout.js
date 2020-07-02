@@ -12,9 +12,8 @@ const MainLayout = (props) => {
                     content="Dr. Jesús Bañuelos, clínica dental. Una sonrisa dice más que mil palabras."
                 />
                 <link rel="apple-touch-icon" href="/logo192.png" /> 
-                <link rel="manifest" href="/manifest.json" /> 
-                <link rel="stylesheet" href="/main.css" /> 
-                <title>Dr. Jesús Bañuelos | clínica dental</title>
+                <link rel="manifest" href="/manifest.json" />
+                <title>Dr. Jesús Bañuelos | {props.title}</title>
             </Head>
             {props.children}
         </>
