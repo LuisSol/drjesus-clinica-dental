@@ -14,11 +14,15 @@ const NavBar = styled.div`
     justify-content: space-between;
     margin: 0 auto;
     padding: 10px;
+    @media (max-width: 1024px) {
+        width: 100%;
+    }
 `
 const NavLinks = styled.nav`
-
+    a {
+        margin-left: 3rem;
+    }
 `
-
 
 export default function Navigation() {
     return (
