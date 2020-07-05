@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import Link from 'next/link'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 const FullWidthDiv = styled.div`
     background-color: #0981c5;
@@ -30,9 +31,63 @@ const MidBannerContainer = styled.section`
         border: 1px solid white;
         border-radius: 10px;
     }
+    img {
+        height: 40px;
+        position: absolute;
+    }
     @media (max-width: 1020px) {
         width: 100%;
-    }    
+    }  
+    #tooth {
+        bottom: 10%;
+        left: 20%;
+        transform: rotate(10deg);
+    } 
+    #toothpaste {
+        bottom: 10%;
+        right: 20%;
+        transform: rotate(10deg);
+    } 
+    #toothcheck {
+        bottom: 30%;
+        left: 10%;
+        transform: rotate(35deg);
+    }
+    #twisers {
+        bottom: 30%;
+        right: 10%;
+        transform: rotate(-35deg);
+    }
+    #shringe {
+        bottom: 30%;
+        left: 30%;
+        transform: rotate(120deg);
+    }
+    #prostetic {
+        bottom: 30%;
+        right: 30%;
+        transform: rotate(-20deg);
+    }
+    #pills {
+        bottom: 10%;
+        left: 35%;
+        transform: rotate(-20deg);
+    }
+    #floss {
+        bottom: 10%;
+        right: 35%;
+        transform: rotate(-25deg);
+    }
+    #Chair {
+        bottom: 10%;
+        right: 5%;
+        transform: rotate(25deg);
+    }
+    #brush {
+        bottom: 10%;
+        left: 5%;
+        transform: rotate(-25deg);
+    }
 `
 
 const MidBanner = () => (
@@ -42,6 +97,56 @@ const MidBanner = () => (
             <Link href="/contacto">
                 <a>Como llegar</a>
             </Link>
+            <LazyLoadImage
+                src="/images/tooth.svg"
+                effect="opacity"
+                id="tooth"
+            />
+            <LazyLoadImage
+                src="/images/toothpaste.svg"
+                effect="opacity"
+                id="toothpaste"
+            />
+            <LazyLoadImage
+                src="/images/tooth_check.svg"
+                effect="opacity"
+                id="toothcheck"
+            />
+            <LazyLoadImage
+                src="/images/twisers.svg"
+                effect="opacity"
+                id="twisers"
+            />
+            <LazyLoadImage
+                src="/images/shringe.svg"
+                effect="opacity"
+                id="shringe"
+            />
+            <LazyLoadImage
+                src="/images/prostetic.svg"
+                effect="opacity"
+                id="prostetic"
+            />
+            <LazyLoadImage
+                src="/images/pills.svg"
+                effect="opacity"
+                id="pills"
+            />
+            <LazyLoadImage
+                src="/images/floss.svg"
+                effect="opacity"
+                id="floss"
+            />
+            <LazyLoadImage
+                src="/images/brush.svg"
+                effect="opacity"
+                id="brush"
+            />
+            <LazyLoadImage
+                src="/images/Chair.svg"
+                effect="opacity"
+                id="Chair"
+            />
         </MidBannerContainer>
     </FullWidthDiv>    
 )
