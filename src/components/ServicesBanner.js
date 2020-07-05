@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import DrjesusSvg from './DrjesusSvg'
 
 const FullWidthDiv = styled.div`
     width: 100%;
@@ -36,6 +37,7 @@ const ServicesBanner = () => (
                 <h1>Conoce nuestros servicios</h1>
                 <p>Estamos a la vanguardia de los más modernos procedimientos odontológicos y contamos con un amplio catálogo de servicios, desde extracciones, brackets, ondodoncias, y muchos más...</p>
             </TitleContainer>
+            <DrjesusSvg />
         </ServicesContainer>
     </FullWidthDiv>
 )
