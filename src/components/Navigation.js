@@ -47,15 +47,23 @@ export default function Navigation() {
                     <Link href="/servicios">
                         <a
                             className={router.pathname === '/servicios' ? 'active' : ''}
-                        >Servicios</a></Link>
+                        >Servicios</a>
+                    </Link>
+                    <Link href="/contacto">
+                        <a
+                            className={router.pathname === '/contacto' ? 'active' : ''}
+                        >Contacto</a>
+                    </Link>
                     <Link href="/registro">
                         <a
                             className={router.pathname === '/registro' ? 'active' : ''}
-                        >Crear cuenta</a></Link>
+                        >Crear cuenta</a>
+                    </Link>
                     <Link href="/ingresar">
                         <a
                             className={router.pathname === '/ingresar' ? 'active' : ''}
-                        >Ingresar</a></Link>
+                        >Ingresar</a>
+                    </Link>
                 </NavLinks>
             </NavBar>
         </NavContainer>

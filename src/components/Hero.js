@@ -18,7 +18,7 @@ const TitleContainer = styled.div`
     top: 0;
     right: 0;
     h1 {
-        font-size: 8rem;
+        font-size: 7.5rem;
         margin-bottom: 0;
     }
     p {
