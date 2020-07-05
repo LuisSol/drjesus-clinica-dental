@@ -19,5 +19,13 @@ a {
 }
 /* PRIMARY BUTTON */
 .primary-btn {
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 9rem;
+    height: 2.7rem;
+    color: white;
+    background-color: #1193e7;
+    border-radius: 10px;
+    font-weight: 500;    
 }

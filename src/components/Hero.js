@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import Link from 'next/link'
+
 import HeroImg from './HeroImg'
 
 const FullWidthDiv = styled.div`
@@ -15,15 +17,23 @@ const HeroContainer = styled.header`
 `
 const TitleContainer = styled.div`
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     top: 0;
     right: 0;
+    height: 100%;
     h1 {
         font-size: 7.5rem;
-        margin-bottom: 0;
+        margin: 0;
     }
-    p {
-        text-align: right;
+    p {        
         margin-top: 0;
+        text-align: center;
+    }
+    a {
+        margin-top: 2rem;
     }
 `
 
@@ -33,8 +43,13 @@ const Hero = () => {
             <HeroContainer>
                 <HeroImg />
                 <TitleContainer>
-                    <h1>SONRÍE</h1>
-                    <p>Una sonrisa vale más que mil imágenes.</p>
+                    <div>
+                        <h1>SONRÍE</h1>
+                        <p>Una sonrisa vale más que mil imágenes.</p> 
+                    </div>                  
+                    <Link href="/citas">                    
+                            <a className="primary-btn">Haz tu cita</a>
+                    </Link>                                        
                 </TitleContainer>
             </HeroContainer>
         </FullWidthDiv>

@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import Link from 'next/link'
+
 import DrjesusSvg from './DrjesusSvg'
 
 const FullWidthDiv = styled.div`
@@ -23,10 +25,13 @@ const TitleContainer = styled.div`
         margin-bottom: 0;
     }
     p {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         text-align: left;
         margin-top: 2rem;
         font-weight: 300;
+    }
+    a {
+        margin-top: 3rem;
     }
 `
 
@@ -36,6 +41,11 @@ const ServicesBanner = () => (
             <TitleContainer>
                 <h1>Conoce nuestros servicios</h1>
                 <p>Estamos a la vanguardia de los más modernos procedimientos odontológicos y contamos con un amplio catálogo de servicios, desde extracciones, brackets, ondodoncias, y muchos más...</p>
+                <div>
+                    <Link href="/servicios">
+                        <a className="primary-btn">Más información</a>
+                    </Link>
+                </div>
             </TitleContainer>
             <DrjesusSvg />
         </ServicesContainer>
