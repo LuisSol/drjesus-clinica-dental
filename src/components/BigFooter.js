@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 const BigFooterContainer = styled.footer`
-    height: 40rem;
-    background-color: rgba(0,0,150,.9);
+    height: 35rem;
+    background: #3F5EFB;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, rgba(63, 94, 251, .9), rgba(252, 70, 107, .9));  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, rgba(63, 94, 251, .9), rgba(252, 70, 107, .9)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
     position: relative;
     display: flex;
     flex-direction: column;
@@ -22,16 +24,24 @@ const BigFooterContainer = styled.footer`
     h2 {
         margin-top: 0;
     }
+    img {
+        position: absolute;
+        top: 0;        
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
 `
 
-const BigFooter = () => {
-    return (
-        <BigFooterContainer>
-            <h1>SONRÍE MÁS</h1>
-            <h2>nosotros te ayudamos.</h2>
-            <small>Todos los derechos reserverdos; Clínica dental Dr. Jesús Bañuelos. Diseñado por LESN. Aviso de privacidad.</small>
-        </BigFooterContainer>
-    )
-}
+const BigFooter = () => (
+    <BigFooterContainer>
+        <img src="/images/HERO5.jpg" alt="sonrisas" />
+        <h1>SONRÍE MÁS</h1>
+        <h2>nosotros te ayudamos.</h2>
+        <small>Todos los derechos reserverdos; Clínica dental Dr. Jesús Bañuelos. Diseñado por LESN. Aviso de privacidad.</small>
+    </BigFooterContainer>
+)
+
 
 export default BigFooter;
