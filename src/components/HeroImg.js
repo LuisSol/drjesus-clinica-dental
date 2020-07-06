@@ -36,12 +36,16 @@ const girlFace = keyframes`
 `
 
 const ImgContainer = styled.div`
-    height: 100%;
+    position: absolute;
+    height: 90%;
+    width: 550px;
+    bottom: 0;
+    left: 10px;
+    display: flex;
     svg {
-        height: 85%;
-        position: absolute;
-        bottom: 0;
-        left: 0;
+        align-self: flex-end;
+        z-index: -1;
+        width: 100%;        
     }
     #girl_right_arm {
         transform-origin: right;
@@ -68,11 +72,19 @@ const ImgContainer = styled.div`
         transform-box: fill-box;
         animation: ${girlFace} 5s ease-in-out infinite alternate;
     }
+    @media (max-width: 850px) {
+      height: 60%; 
+      left: 50%;
+      transform: translateX(-50%); 
+    }
+    @media (max-width: 550px) {
+      width: 95%;
+    }
 `
 
 const HeroImg = () => (
     <ImgContainer>
-        <svg viewBox="0 0 569 359" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 510 359" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="HERO 1" clipPath="url(#clip0)">
             <g id="girl_right_arm">
             <path id="Vector" fillRule="evenodd" clipRule="evenodd" d="M177.5 238.6C176.5 238.9 165.7 197.1 171.3 165.6C171.4 164.9 170.6 164.5 170.6 164.5C170.6 164.5 158.6 166 153.9 162.9C153.9 162.9 152.5 163.5 152.5 164C148.8 194.7 129.7 272.7 175.8 268C194.7 266.1 220.6 250.5 235 239.8C248 230.1 245.2 234 251 224.4C254.2 219.1 253.3 207.9 251.8 206.4C248.1 202.8 238 191.8 232.2 194.7C226.4 197.6 177.5 238.6 177.5 238.6Z" fill="#F4AD85"/>
@@ -178,7 +190,7 @@ const HeroImg = () => (
             </g>
             <defs>
             <clipPath id="clip0">
-            <rect width="569" height="359" fill="white"/>
+            <rect width="510" height="359" fill="white"/>
             </clipPath>
             </defs>
         </svg>

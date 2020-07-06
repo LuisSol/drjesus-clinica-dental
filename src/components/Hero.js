@@ -8,21 +8,27 @@ const FullWidthDiv = styled.div`
 `
 const HeroContainer = styled.header`
     width: 1020px; 
-    height: 60vh;
     margin: 0 auto;
+    height: 30rem;
     position: relative;
     @media (max-width: 1020px) {
         width: 100%;
     }
+    @media (max-width: 850px) {
+        height: 40rem;
+    }
+    @media (max-width: 550px) {
+        height: 115vw;
+    }
 `
-const TitleContainer = styled.div`
+const TitleContainer = styled.div`    
     position: absolute;
+    top: 0;
+    right: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    top: 0;
-    right: 0;
+    justify-content: center;    
     height: 100%;
     h1 {
         font-size: 7.5rem;
@@ -34,6 +40,35 @@ const TitleContainer = styled.div`
     }
     a {
         margin-top: 2rem;
+    }
+    @media (max-width: 850px) {
+        height: 38%;
+        right: 50%;
+        transform: translateX(50%);
+        a {
+            margin-top: 0;
+        }
+    }
+    @media (max-width: 520px) {
+        h1 {
+            font-size: 6rem;
+        }
+    }
+    @media (max-width: 450px) {
+        h1 {
+            font-size: 5rem;
+        }
+        p {
+            font-size: .8rem;
+        }
+    }
+    @media (max-width: 420px) {
+        h1 {
+            font-size: 4rem;
+        }
+        p {
+            font-size: .7rem;
+        }
     }
 `
 
