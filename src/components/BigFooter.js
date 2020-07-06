@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const BigFooterContainer = styled.footer`
-    height: 35rem;
+    height: 30rem;
     background: #3F5EFB;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, rgba(63, 94, 251, .9), rgba(252, 70, 107, .9));  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, rgba(63, 94, 251, .9), rgba(252, 70, 107, .9)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
@@ -19,6 +19,7 @@ const BigFooterContainer = styled.footer`
     }
     h1 {
         font-size: 7.5rem;
+        margin-top: 1rem;
         margin-bottom: 0;
     }
     h2 {
@@ -31,6 +32,35 @@ const BigFooterContainer = styled.footer`
         height: 100%;
         object-fit: cover;
         z-index: -1;
+    }
+    @media (max-width: 750px) {
+        h1 {
+            font-size: 6.5rem;
+        }
+    }
+    @media (max-width: 650px) {
+        h1 {
+            font-size: 5.5rem;
+        }
+    }
+    @media (max-width: 550px) {
+        height: 25rem;
+        h1 {
+            font-size: 4rem;
+        }
+    }
+    @media (max-width: 400px) {
+        h1 {
+            font-size: 3.5rem;
+        }
+        h2 {
+            font-size: 1rem;
+        }
+    }
+    @media (max-width: 350px) {
+        h1 {
+            font-size: 3.2rem;
+        }
     }
 `
 
