@@ -14,12 +14,23 @@ const ServicesContainer = styled.main`
     @media (max-width: 1020px) {
         width: 100%;
     }    
+    @media (max-width: 850px) {
+        height: 42rem;
+    }
+    @media (max-width: 550px) {
+        height: 120vw;
+    }
+    @media (max-width: 400px) {
+        height: 130vw;
+    }
+    
 `
 const TitleContainer = styled.div`
     position: absolute;
     top: 30px;
-    left: 0;
+    left: 20px;
     width: 45%;
+    z-index: 1;
     h1 {
         font-size: 3rem;
         margin-bottom: 0;
@@ -32,6 +43,40 @@ const TitleContainer = styled.div`
     }
     a {
         margin-top: 3rem;
+    }
+    @media (max-width: 850px) {
+        width: 90%;
+        h1 {
+            font-size: 3rem;
+            margin-top: 0;
+        }
+    }
+    @media (max-width: 640px) {        
+        h1 {
+            font-size: 2.5rem;
+        }
+        p {
+            font-size: 1rem;
+        }
+        a {
+            margin-top: 2rem;
+        }
+    }
+    @media (max-width: 550px) {
+        h1 {
+            font-size: 2rem;
+        }
+    }
+    @media (max-width: 425px) {
+        h1 {
+            font-size: 1.5rem;
+        }
+        a {
+            margin-top: 1.5rem;
+        }
+        p {
+            font-size: .8rem;
+        }
     }
 `
 

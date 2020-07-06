@@ -42,9 +42,11 @@ const DrjesusContainer = styled.div`
     bottom: 0;
     right: 0;
     height: 100%;
+    width: 500px;
     svg {
-        height: 90%;
+        width: 100%;
         align-self: flex-end;
+        z-index: -1;
     }
     #head {
         transform-origin: bottom;
@@ -100,7 +102,20 @@ const DrjesusContainer = styled.div`
         transform-origin: center;
         transform-box: fill-box;      
         animation: ${starAnimation} 3s ease-in-out 3s infinite alternate;
-    }    
+    }   
+    @media (max-width: 850px) {        
+        right: 50%;
+        transform: translateX(50%);
+    } 
+    @media (max-width: 550px) {        
+        width: 85%;
+    } 
+    @media (max-width: 500px) {        
+        width: 80%;
+    } 
+    @media (max-width: 450px) {        
+        width: 70%;
+    } 
 `
 
 const DrjesusSvg = () => (
