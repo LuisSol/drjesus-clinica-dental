@@ -21,16 +21,6 @@ const MidBannerContainer = styled.section`
         text-align: center;
         font-size: 4rem;
     }
-    a {        
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 500;
-        width: 9rem;
-        height: 2.7rem;
-        border: 1px solid white;
-        border-radius: 10px;
-    }
     img {
         height: 40px;
         position: absolute;
@@ -145,7 +135,7 @@ const MidBanner = () => (
         <MidBannerContainer>
             <h1>Visitanos, nosotros te daremos<br />tu mejor sonrisa</h1>
             <Link href="/contacto">
-                <a>Como llegar</a>
+                <a className="link-btn secundary-btn">Como llegar</a>
             </Link>
             <LazyLoadImage
                 src="/images/tooth.svg"

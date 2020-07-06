@@ -88,7 +88,7 @@ const ServicesBanner = () => (
                 <p>Estamos a la vanguardia de los más modernos procedimientos odontológicos y contamos con un amplio catálogo de servicios, desde extracciones, brackets, ondodoncias, y muchos más...</p>
                 <div>
                     <Link href="/servicios">
-                        <a className="primary-btn">Más información</a>
+                        <a className="link-btn primary-btn">Más información</a>
                     </Link>
                 </div>
             </TitleContainer>

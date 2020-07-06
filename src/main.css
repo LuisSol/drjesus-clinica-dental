@@ -17,15 +17,21 @@ a {
     color: inherit;
     font-weight: 300;
 }
-/* PRIMARY BUTTON */
-.primary-btn {
+/* LINK BUTTONS */
+.link-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 9rem;
     height: 2.7rem;
-    color: white;
-    background-color: #1193e7;
     border-radius: 10px;
-    font-weight: 500;    
+    font-weight: 500;
+    color: white;
+}
+.primary-btn {       
+    background-color: #1193e7;        
+}
+.secundary-btn {  
+    border: 1px solid white;
+    background-color: transparent;   
 }

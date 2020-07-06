@@ -83,7 +83,7 @@ const Hero = () => {
                         <p>Una sonrisa vale más que mil imágenes.</p> 
                     </div>                  
                     <Link href="/citas">                    
-                            <a className="primary-btn">Haz tu cita</a>
+                            <a className="link-btn primary-btn">Haz tu cita</a>
                     </Link>                                        
                 </TitleContainer>
             </HeroContainer>

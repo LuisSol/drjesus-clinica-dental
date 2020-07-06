@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Link from 'next/link' 
 
 const BigFooterContainer = styled.footer`
     height: 30rem;
@@ -69,6 +70,9 @@ const BigFooter = () => (
         <img src="/images/HERO5.jpg" alt="sonrisas" />
         <h1>SONRÍE MÁS</h1>
         <h2>nosotros te ayudamos.</h2>
+        <Link href="/contacto">
+            <a className="link-btn secundary-btn">Agenda tu cita</a>
+        </Link>
         <small>Todos los derechos reserverdos; Clínica dental Dr. Jesús Bañuelos. Diseñado por LESN. Aviso de privacidad.</small>
     </BigFooterContainer>
 )
