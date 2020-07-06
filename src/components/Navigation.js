@@ -50,8 +50,8 @@ const MobileMenuBtn = styled.button`
     height: 5rem;
     background-color: white;
     position: fixed;
-    bottom: 3.5rem;
-    right: 3.5rem;
+    bottom: 3rem;
+    right: 2rem;
     display: none;
     border-radius: 50%;
     border: 1px solid #666;

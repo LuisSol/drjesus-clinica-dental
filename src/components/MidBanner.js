@@ -10,9 +10,9 @@ const MidBannerContainer = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 4rem 20px;
+    padding: 3rem 20px;
     width: 1020px; 
-    height: 27rem;
+    height: 25rem;
     margin: 0 auto;
     position: relative;
     color: white;
@@ -34,10 +34,7 @@ const MidBannerContainer = styled.section`
     img {
         height: 40px;
         position: absolute;
-    }
-    @media (max-width: 1020px) {
-        width: 100%;
-    }  
+    }     
     #tooth {
         bottom: 10%;
         left: 20%;
@@ -87,6 +84,59 @@ const MidBannerContainer = styled.section`
         bottom: 10%;
         left: 5%;
         transform: rotate(-25deg);
+    }
+    @media (max-width: 1020px) {
+        width: 100%;
+    } 
+    @media (max-width: 940px) {        
+        h1 {
+            font-size: 3.7rem;
+        }
+    }
+    @media (max-width: 875px) {        
+        #tooth {
+            left: 17%;
+        } 
+        #toothpaste {
+            right: 15%;
+        } 
+        #shringe {
+            bottom: 20%;
+            left: 23%;
+        }
+        #prostetic {
+            bottom: 20%;
+            right: 23%;
+        }
+        #pills {
+            bottom: 10%;
+            left: 30%;
+        }
+        #floss {
+            bottom: 10%;
+            right: 30%;
+        }
+    }
+    @media (max-width: 750px) {
+        img {
+            width: 35px;
+        }
+    }
+    @media (max-width: 650px) {
+        h1 {
+            font-size: 3rem;
+        }
+    }
+    @media (max-width: 520px) {
+        h1 {
+            font-size: 2.5rem;
+        }
+    }
+    @media (max-width: 400px) {
+        height: 23rem;
+        h1 {
+            font-size: 2rem;
+        }
     }
 `
 
