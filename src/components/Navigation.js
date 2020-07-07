@@ -24,10 +24,10 @@ const NavBar = styled.div`
         top: 0;
         right: -100vw;
         width: 45%; 
-        height: 100%;       
+        height: 100vh;       
         justify-content: flex-start;
         transition: all ease 300ms;
-        
+        padding-bottom: 13vh;
     }    
 `
 const NavLinks = styled.nav`
