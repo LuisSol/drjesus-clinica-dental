@@ -24,7 +24,7 @@ const NavBar = styled.div`
         top: 0;
         right: -100vw;
         width: 45%; 
-        height: 100vh;       
+        height: 100%;       
         justify-content: flex-start;
         transition: all ease 300ms;
         
