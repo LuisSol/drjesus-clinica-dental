@@ -27,7 +27,6 @@ const NavBar = styled.div`
         height: 100vh;       
         justify-content: flex-start;
         transition: all ease 300ms;
-        
     }    
 `
 const NavLinks = styled.nav`
@@ -40,7 +39,7 @@ const NavLinks = styled.nav`
     @media (max-width: 750px) {
         flex-direction: column;
         width: 100%;
-        height: 70vh;
+        height: 60vh;
         align-items: center; 
         justify-content: space-around;       
     }
