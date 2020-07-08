@@ -2,8 +2,7 @@ import styled from 'styled-components'
 import useFormValidation from '../utils/useFormValidation'
 import validateContactForm from '../utils/validateContactForm'
 
-const ContactFormStyled = styled.form`
-    width: 20rem;
+const ContactFormStyled = styled.form`    
     margin-top: .5rem;
     label {
         display: block;

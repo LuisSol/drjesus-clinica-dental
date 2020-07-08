@@ -16,13 +16,17 @@ const HeaderContainer = styled.header`
     p {
         font-weight: 300;
     }
-    @media (1024px) {
+    @media (max-width: 1024px) {
         width: 100%;
     }
 `
 const Content = styled.div`
     display: flex;
-    justify-content: space-between;    
+    justify-content: space-between;
+    flex-wrap: wrap;  
+    .contact-info {
+        width: 20rem;
+    }  
     .contact-list {
         margin-top: 1rem;
         height: 10rem;
@@ -51,6 +55,18 @@ const Content = styled.div`
         height: 23px; 
         margin-right: 1rem;       
     }
+    @media (max-width: 860px) {
+        flex-direction: column;
+        align-items: center;
+        .contact-info {
+            width: 80%;
+        }
+    }
+    @media (max-width: 450px) {
+        .contact-info {
+            width: 90%;
+        }
+    }
 `
 
 export default function ContactHeader() {
@@ -60,7 +76,7 @@ export default function ContactHeader() {
                 <h1>Contacto</h1>
                 <p>Tienes dudas o preguntas?, contáctanos por cualquiera de los siguientes medios: </p>
                 <Content>
-                    <div>
+                    <div className="contact-info">
                         <ContactForm />
                         <div className="contact-list">
                             <div className="contact-card">

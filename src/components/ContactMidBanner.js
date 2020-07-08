@@ -8,6 +8,7 @@ const FullWidthDiv = styled.div`
 const HowToArrive = styled.main`
     color: white;
     width: 1020px;
+    height: 32rem;
     padding: 20px;
     margin: 0 auto;
     div.content {
@@ -17,7 +18,6 @@ const HowToArrive = styled.main`
         height: 350px;
         width: 500px;
         border-radius: 10px;
-        margin-bottom: 1rem;
     }
     @media (max-width: 1020px) {
         width: 100%;

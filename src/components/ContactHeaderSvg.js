@@ -20,6 +20,7 @@ const armAnimation = keyframes`
 const SvgContainer = styled.div`    
     height: 500px;
     text-align: right;
+    flex: 1;
     svg {
         height: 100%;
     }
@@ -32,6 +33,13 @@ const SvgContainer = styled.div`
         transform-origin: right;
         transform-box: fill-box;
         animation: ${armAnimation} 3s ease-in-out infinite alternate;
+    }
+    @media (max-width: 860px) {
+        height: 400px;
+        text-align: center;
+    }
+    @media (max-width: 450px) {
+        height: 300px;
     }
 `
 
