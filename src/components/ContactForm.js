@@ -4,7 +4,7 @@ import validateContactForm from '../utils/validateContactForm'
 
 const ContactFormStyled = styled.form`
     width: 20rem;
-    margin-top: 2rem;
+    margin-top: .5rem;
     label {
         display: block;
         margin-top: 1rem;
@@ -35,7 +35,8 @@ const ContactFormStyled = styled.form`
     input[type="submit"] {
         margin-top: 1.5rem; 
         height: 2rem;  
-        font-weight: 600;     
+        font-weight: 600; 
+        border-radius: 7px;    
     }
     input:focus, textarea:focus {
         outline: none;

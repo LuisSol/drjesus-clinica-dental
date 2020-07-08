@@ -134,7 +134,7 @@ const MidBanner = () => (
     <FullWidthDiv>
         <MidBannerContainer>
             <h1>Visitanos, nosotros te daremos<br />tu mejor sonrisa</h1>
-            <Link href="/contacto">
+            <Link href="/contacto#llegar">
                 <a className="link-btn secundary-btn">Como llegar</a>
             </Link>
             <LazyLoadImage

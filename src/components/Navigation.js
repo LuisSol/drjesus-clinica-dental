@@ -112,15 +112,15 @@ export default function Navigation() {
                         className={router.pathname === '/contacto' ? 'active' : ''}
                     >Contacto</a>
                 </Link>
-                <Link href="/registro">
+                <Link href="/citas">
                     <a
                         className={router.pathname === '/registro' ? 'active' : ''}
-                    >Crear cuenta</a>
+                    >Citas</a>
                 </Link>
                 <Link href="/ingresar">
                     <a
                         className={router.pathname === '/ingresar' ? 'active' : ''}
-                    >Ingresar</a>
+                    >Mi cuenta</a>
                 </Link>
             </NavLinks>
         </NavBar>
