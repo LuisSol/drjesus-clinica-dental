@@ -33,7 +33,7 @@ const useFormValidation = ( initialValues, validationFunction, onValidValues) =>
     }
 
     return { handleSubmit, handleBlur, handleChange, resetValues,
-             values, errors }
+             values, errors, isSubmiting }
 }
 
 export default useFormValidation;

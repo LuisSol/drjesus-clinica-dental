@@ -14,7 +14,7 @@ export default (req, res) => {
     <h2>Enviado por: ${req.body.name}</h2>
     <h2>Correo: ${req.body.email}</h2>
     <h3>Pregunta:</h3>
-    <p>${req.body.question}</p
+    <p>${req.body.question}</p>
   `
   const emailParams = {
     Destination: {
