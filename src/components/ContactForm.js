@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import useFormValidation from '../utils/useFormValidation'
 import validateContactForm from '../utils/validateContactForm'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const ContactFormStyled = styled.form`    
     margin-top: .5rem;
@@ -48,9 +50,41 @@ const initialValues = {
 }
 
 const ContactForm = () => {
+
+    const onValidValues = () => {
+        // submit data
+        axios.post('/api/contact_form', values)
+        .then( res => {
+            console.log(res)
+            if(res.status === 200) {
+                // success
+                toast.success('Gracias por tu contacto, reponderemos a la brevedad posible.', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+                resetValues();
+            }
+            else {
+                // error
+                toast.error('Algo salió mal, intenta de nuevo más tarde.', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            }
+        });
+    }
     
-    const { handleSubmit, handleBlur, handleChange,
-            values, errors } = useFormValidation(initialValues, validateContactForm)
+    const { handleSubmit, handleBlur, handleChange, resetValues,
+            values, errors } = 
+            useFormValidation(initialValues, validateContactForm, onValidValues);
     
     return (        
         <ContactFormStyled onSubmit={handleSubmit}>                      

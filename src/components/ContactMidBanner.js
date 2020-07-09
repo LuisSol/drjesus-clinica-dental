@@ -114,7 +114,7 @@ export default function ContactMidBanner() {
                         <a 
                             href="https://m.uber.com/ul/?action=setPickup&client_id=2JXSfkAq9_d64w4bSWBrjTdykiuSKhpu&pickup=my_location&dropoff[formatted_address]=N%C3%BAcleo%20M%C3%A9dico%20Ba%C3%B1uelos%2C%20Avenida%20Francisco%20Javier%20Mina%2C%20San%20Andr%C3%A9s%2C%20Guadalajara%2C%20Jalisco%2C%20M%C3%A9xico&dropoff[latitude]=20.665195&dropoff[longitude]=-103.306497" 
                             target="_blank"
-                            
+                            rel="noopener noreferrer"
                             id="uber-btn"
                         >
                             Llévame aquí con

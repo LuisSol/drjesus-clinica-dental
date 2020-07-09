@@ -1,17 +1,14 @@
 import {useState, useEffect} from 'react'
 
-let form;
-
-const useFormValidation = ( initialValues, validationFunction) => {
+const useFormValidation = ( initialValues, validationFunction, onValidValues) => {
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [isSubmiting, setIsSubmiting] = useState(false);
-
+    
     useEffect(() => {
         if(isSubmiting) {            
             if(errors.isEmpty()) {
-                //submit
-                console.log('enviando')
+                onValidValues();                
             }
             setIsSubmiting(false);
         }
@@ -24,7 +21,6 @@ const useFormValidation = ( initialValues, validationFunction) => {
         })
     }
     const handleSubmit = (e) => {
-        if(!form) form = e.target;
         setIsSubmiting(true);
         e.preventDefault();
         setErrors(validationFunction(values));        
@@ -32,8 +28,11 @@ const useFormValidation = ( initialValues, validationFunction) => {
     const handleBlur = () => {
         setErrors(validationFunction(values));
     }
+    const resetValues = () => {
+        setValues(initialValues);
+    }
 
-    return { handleSubmit, handleBlur, handleChange,
+    return { handleSubmit, handleBlur, handleChange, resetValues,
              values, errors }
 }
 
