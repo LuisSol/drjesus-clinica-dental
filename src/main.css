@@ -28,10 +28,12 @@ a {
     font-weight: 500;
     color: white;
 }
-.primary-btn {       
-    background-color: #1193e7;        
+.primary-btn { 
+    border: 0;      
+    background-color: #1193e7;          
 }
 .secundary-btn {  
     border: 1px solid white;
     background-color: transparent;   
 }
+
