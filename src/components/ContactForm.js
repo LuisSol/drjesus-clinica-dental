@@ -57,7 +57,7 @@ const ContactForm = () => {
         .then( res => {
             console.log(res)
             if(res.status === 200) {
-                // success
+                // success                
                 toast.success('Gracias por tu contacto, reponderemos a la brevedad posible.', {
                     position: "top-right",
                     autoClose: 5000,

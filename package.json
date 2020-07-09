@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "aws-sdk": "^2.712.0",
     "axios": "^0.19.2",
     "next": "9.4.4",
     "prop-types": "^15.7.2",
