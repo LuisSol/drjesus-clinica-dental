@@ -21,7 +21,25 @@ const HowToArrive = styled.main`
     }
     @media (max-width: 1020px) {
         width: 100%;
-    }    
+    }
+    @media (max-width: 860px) {
+        height: 45rem;
+        div.content {
+            flex-direction: column;
+            align-items: center;
+        }        
+    }  
+    @media (max-width: 560px) {
+        #map {
+            width: 95%;
+        }
+    } 
+    @media (max-width: 400px) {        
+        height: 47rem;
+    }
+    @media (max-width: 340px) {        
+        height: 48rem;
+    } 
 `
 const PublicTransport = styled.div`  
     padding: 20px;
