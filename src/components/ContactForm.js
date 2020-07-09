@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import styled from 'styled-components'
 import useFormValidation from '../utils/useFormValidation'
 import validateContactForm from '../utils/validateContactForm'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const ContactFormStyled = styled.form`    
     margin-top: .5rem;
@@ -37,6 +40,9 @@ const ContactFormStyled = styled.form`
         font-weight: 600; 
         border-radius: 7px;    
     }
+    input[type="submit"]:disabled {  
+        opacity: .5; 
+    }
     input:focus, textarea:focus {
         outline: none;
     }
@@ -48,9 +54,56 @@ const initialValues = {
 }
 
 const ContactForm = () => {
+    const [sendingMail, setSendingMail] = useState(false)
+
+    const onValidValues = () => {        
+        // submit data
+        setSendingMail(true);
+        axios.post('/api/contact_form', values)
+        .then( res => {
+            if(res.status === 200) {
+                // success                
+                toast.success('Gracias por tu contacto, reponderemos a la brevedad posible.', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+                resetValues();
+                setSendingMail(false);
+            }
+            else {
+                // email sent error
+                toast.error('Algo salió mal, intenta de nuevo más tarde.', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            }
+        })
+        .catch(
+            // axios error
+            err => {
+            console.error(err);
+            toast.error('Algo salió mal, intenta de nuevo más tarde.', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+        });
+    }
     
-    const { handleSubmit, handleBlur, handleChange,
-            values, errors } = useFormValidation(initialValues, validateContactForm)
+    const { handleSubmit, handleBlur, handleChange, resetValues,
+            values, errors } = 
+            useFormValidation(initialValues, validateContactForm, onValidValues);
     
     return (        
         <ContactFormStyled onSubmit={handleSubmit}>                      
@@ -84,7 +137,7 @@ const ContactForm = () => {
             />
             { errors.question && <small>{errors.question}</small> }
 
-            <input type="submit" className="link-btn primary-btn" />
+            <input type="submit" className="link-btn primary-btn" disabled={sendingMail} />
         </ContactFormStyled>
     )
 }
