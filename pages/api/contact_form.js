@@ -6,7 +6,6 @@ AWS.config.update({
   region: process.env.AWS_SES_REGION
 })
 
-
 export default (req, res) => {
   
   const emailHTML = `

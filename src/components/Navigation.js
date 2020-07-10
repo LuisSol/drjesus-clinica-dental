@@ -45,12 +45,12 @@ const NavLinks = styled.nav`
     }
 `
 const MobileMenuBtn = styled.button`
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
     background-color: white;
     position: fixed;
-    bottom: 3rem;
-    right: 2rem;
+    bottom: 1rem;
+    right: 1rem;
     display: none;
     border-radius: 50%;
     border: 1px solid #666;
@@ -114,13 +114,13 @@ export default function Navigation() {
                 </Link>
                 <Link href="/citas">
                     <a
-                        className={router.pathname === '/registro' ? 'active' : ''}
+                        className={router.pathname === '/citas' ? 'active' : ''}
                     >Citas</a>
                 </Link>
                 <Link href="/ingresar">
                     <a
                         className={router.pathname === '/ingresar' ? 'active' : ''}
-                    >Mi cuenta</a>
+                    >Ingresar</a>
                 </Link>
             </NavLinks>
         </NavBar>
