@@ -1,13 +1,11 @@
-import styled from 'styled-components';
-
 import MainLayout from '../src/components/MainLayout';
 
-const Signup = () => {
+const Profile = () => {
     return (
         <MainLayout title="Registro">
-            <h1>Registro</h1>
+            <h1>Perfil</h1>
         </MainLayout>
     )
 }
 
-export default Signup;
+export default Profile;

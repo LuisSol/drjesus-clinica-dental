@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { auth } from '../utils/firebase'
 
 const NavBar = styled.div`
     width: 1024px; 
@@ -122,6 +123,10 @@ export default function Navigation() {
                         className={router.pathname === '/ingresar' ? 'active' : ''}
                     >Ingresar</a>
                 </Link>
+                <a  
+                    href="#"
+                    onClick={ () => auth.signOut() }
+                >Salir</a>
             </NavLinks>
         </NavBar>
         <MobileMenuBtn 
