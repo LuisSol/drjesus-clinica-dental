@@ -1,7 +1,7 @@
 import types from './actionTypes';
 import { HYDRATE } from 'next-redux-wrapper'
 
-const userReducer = (state = {}, action) => {
+const userReducer = (state = { user: null }, action) => {
     switch(action.type) {
         case HYDRATE:
             console.log('hydratation');
@@ -10,7 +10,7 @@ const userReducer = (state = {}, action) => {
                 ...action.payload
             }
         case types.USER_LOGIN:
-            console.log('Log in user');
+            console.log('Log in user ');
             return {
                 ...state,
                 user: action.user
@@ -22,7 +22,6 @@ const userReducer = (state = {}, action) => {
                 user: null
             }
         default:
-            console.log(state);
             return state;
     }
 }

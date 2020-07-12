@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { auth } from '../utils/firebase'
+import { useSelector } from 'react-redux'
 
 const NavBar = styled.div`
     width: 1024px; 
@@ -89,9 +90,16 @@ const MobileMenuBtn = styled.button`
     }
 `
 
-export default function Navigation() {
+const Navigation = () => {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const router = useRouter();
+    const user = useSelector( state => state.user );
+
+    const logout = () => {
+        auth.signOut()
+        .then(() => router.push('/'))
+        .catch(err => console.error(err));
+    }
 
     return (
         <>
@@ -118,15 +126,20 @@ export default function Navigation() {
                         className={router.pathname === '/citas' ? 'active' : ''}
                     >Citas</a>
                 </Link>
-                <Link href="/ingresar">
-                    <a
-                        className={router.pathname === '/ingresar' ? 'active' : ''}
-                    >Ingresar</a>
-                </Link>
-                <a  
-                    href="#"
-                    onClick={ () => auth.signOut() }
-                >Salir</a>
+                {
+                    user 
+                    ?
+                    <a  
+                        href="#"
+                        onClick={ logout }
+                    >Salir</a>
+                    :                    
+                    <Link href="/ingresar">
+                        <a
+                            className={router.pathname === '/ingresar' ? 'active' : ''}
+                        >Ingresar</a>
+                    </Link>
+                }
             </NavLinks>
         </NavBar>
         <MobileMenuBtn 
@@ -150,3 +163,5 @@ export default function Navigation() {
         </>
     )
 }
+
+export default Navigation;
