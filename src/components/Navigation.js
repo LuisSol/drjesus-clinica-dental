@@ -35,6 +35,7 @@ const NavLinks = styled.nav`
     display: flex;
     width: 30rem;
     justify-content: space-between;
+    position: relative;
     a.active {
         font-weight: 500;
     }
@@ -44,6 +45,30 @@ const NavLinks = styled.nav`
         height: 60vh;
         align-items: center; 
         justify-content: space-around;       
+    }    
+    img {
+        width: 10px;
+        height: 10px;
+        margin-left: .5rem;
+        transition: transform 200ms ease;
+    }
+    img.open {
+        transform: rotate(180deg);
+    }
+    @media (max-width: 750px) {
+        #dropdown-link {
+            display: flex;
+            align-items: center;            
+        }
+        img {
+            transform: rotate(90deg);
+            order: -1;
+            margin-left: 0;
+            margin-right: .5rem;
+        }
+        img.open {
+            transform: rotate(270deg);
+        }
     }
 `
 const MobileMenuBtn = styled.button`
@@ -89,13 +114,48 @@ const MobileMenuBtn = styled.button`
         transform: rotate(-45deg) translate(8px, -5px);
     }
 `
+const DropDown = styled.div`    
+    position: absolute;
+    right: 0;
+    width: 8rem;
+    background-color: white;
+    border-radius: 7px;
+    top: 1.7rem;
+    border: 1px solid #666; 
+    z-index: 10;
+    overflow: hidden;
+    transition: transform 200ms ease;
+    transform: scale(0);
+    transform-origin: top right;
+    &.open {
+        transform: scale(1);
+    }
+    @media (max-width: 750px) {
+        top: auto;
+        bottom: 1rem;
+        right: 100%;
+        transform-origin: bottom right;        
+    }
+`
+const DropDownItem = styled.div`
+    font-weight: 300;
+    height: 1.7rem;
+    display: flex;
+    align-items: center;
+    padding-left: .7rem;
+    &:hover {
+        background-color: #eee;
+    }
+`
 
 const Navigation = () => {
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = React.useState(false);
     const router = useRouter();
     const user = useSelector( state => state.user );
 
     const logout = () => {
+        setIsOpen(false);
         auth.signOut()
         .then(() => router.push('/'))
         .catch(err => console.error(err));
@@ -125,21 +185,33 @@ const Navigation = () => {
                     <a
                         className={router.pathname === '/citas' ? 'active' : ''}
                     >Citas</a>
-                </Link>
+                </Link>                                                
+                <a  
+                    href="#"
+                    onClick={() => setIsOpen(!isOpen)}
+                    id="dropdown-link"
+                >
+                    Mi Cuenta
+                    <img src="/images/arrow.svg" alt="arrow" 
+                         className={isOpen ? 'open' : ''}
+                    />
+                </a>                 
+                <DropDown className={isOpen ? 'open' : ''}>
                 {
                     user 
                     ?
-                    <a  
-                        href="#"
-                        onClick={ logout }
-                    >Salir</a>
-                    :                    
-                    <Link href="/ingresar">
-                        <a
-                            className={router.pathname === '/ingresar' ? 'active' : ''}
-                        >Ingresar</a>
-                    </Link>
-                }
+                        <>                            
+                            <Link href="/perfil">                                    
+                                <a><DropDownItem>Perfil</DropDownItem></a>                                    
+                            </Link>                               
+                            <a href="#" onClick={() => logout()}><DropDownItem>Salir</DropDownItem></a>                              
+                        </>                        
+                    :                                        
+                    <Link href="/ingresar">                                    
+                        <a><DropDownItem>Ingresar</DropDownItem></a>                                    
+                    </Link>                      
+                }    
+                </DropDown>
             </NavLinks>
         </NavBar>
         <MobileMenuBtn 
