@@ -1,8 +1,10 @@
 import { ToastContainer } from 'react-toastify';
-import '../src/main.css'
+import '../src/main.css';
 import 'react-toastify/dist/ReactToastify.css';
+import { wrapper } from '../src/redux/store';
 
-export default function App({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {  
+
   return (
     <>
       <ToastContainer />
@@ -10,3 +12,5 @@ export default function App({ Component, pageProps }) {
     </>
   )
 }
+
+export default wrapper.withRedux(App);
