@@ -1,39 +1,48 @@
-import MainLayout from '../src/components/MainLayout';
+import styled from 'styled-components'
 import Router from 'next/router'
-import { setCookie, parseCookies } from 'nookies'
+import { parseCookies } from 'nookies'
+import { toast } from 'react-toastify'
 
-const Citas = () => {    
+import MainLayout from '../src/components/MainLayout';
+
+const FullWidthDiv = styled.div`
+    width: 100%;
+`
+
+const Citas = ({ redirect }) => {  
+    
+    /* if the result is a redirect 
+       due to present lack of getServerSide support for redirects from client side */
+    if(redirect) {
+        if(process.browser) {
+            toast.warn('Ingresa a tu cuenta para acceder a este recurso', {
+                position: "top-right",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+            });
+            Router.push('/ingresar');
+        }
+        return null;          
+    }
+
     return (
         <MainLayout title="Citas">
-            <h1>Citas</h1>
+            <FullWidthDiv>
+                <h1>Citas</h1>
+            </FullWidthDiv>
         </MainLayout>
     )
 }
 
-Citas.getInitialProps = async (ctx) => {    
+export const getServerSideProps = async (ctx) => {
+    const props = {}
     const { auth } =  parseCookies(ctx);
-    if(!auth) {
-        // Not loged in        
-        setCookie(ctx, 'flash', 
-                  JSON.stringify({ type: 'warn', msg: 'Debes ingresar a tu cuenta para acceder a este recurso' }), 
-                  { maxAge: 60, path: '/' }); 
-        if(process.browser){
-            // client side
-            Router.push('/ingresar'); 
-        }
-        else {
-            // server side
-            const { res } = ctx;            
-            res.writeHead(302, {
-                Location: '/ingresar'
-            });
-            res.end();
-        }                        
-    }
-    else {
-        // loged in        
-    }
-    return { props: {} }
+    console.log(auth);
+    if(!auth) props.redirect = '/ingresar'
+    return { props }
 }
 
 export default Citas;
