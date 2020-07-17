@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import Router from 'next/router';
 import { parseCookies } from 'nookies';
 import { toast } from 'react-toastify'
-import { verifyToken } from '../src/utils/firebaseAdmin'
+import { verifyToken, getUserData } from '../src/utils/firebaseAdmin'
 
 import MainLayout from '../src/components/MainLayout';
+import AvatarForm from '../src/components/AvatarForm'
 
 const FullWidthDiv = styled.div`
     width: 100%;
@@ -13,6 +14,13 @@ const ProfileContainer = styled.main`
     width: 1024px;
     margin: 0 auto;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 300;
+    .title, .appoiments, .services  {
+        align-self: flex-start;
+    }
 `
 
 const Profile = ({ redirect, flash, userData }) => {  
@@ -38,8 +46,22 @@ const Profile = ({ redirect, flash, userData }) => {
         <MainLayout title="Perfil">
             <FullWidthDiv>
                 <ProfileContainer>
-                    <h1 className="name">{userData.name}:</h1>
-
+                    <h1 className="title">Mi Perfil:</h1>
+                    <AvatarForm url={userData.avatar} />
+                    <div>
+                        <p>
+                            <strong>nombre: </strong>
+                            <span>{userData.name}</span>
+                        </p>
+                        <p><strong>correo: </strong><span>{userData.email}</span></p>
+                        <p><strong>teléfono: </strong><span>{userData.phone}</span></p>
+                    </div>
+                    <div className="appoiments">
+                        <h2>Próximas citas:</h2>
+                    </div>
+                    <div className="services">
+                        <h2>Historial:</h2>
+                    </div>                    
                 </ProfileContainer>
             </FullWidthDiv>
         </MainLayout>
@@ -58,11 +80,14 @@ export const getServerSideProps = async (ctx) => {
     } 
     else {
         try {
-            const decodedData = await verifyToken(auth);
+            const { uid } = await verifyToken(auth);
+            const user = (await getUserData(uid)).toJSON();
+            console.log(user);
             props.userData = {
-                name: decodedData.name,
-                avatar: decodedData.picture,
-                email: decodedData.email
+                name: user.displayName || null,
+                avatar: user.photoURL || null,
+                email: user.email || null,
+                phone: user.phoneNumber || null
             }
         }
         catch (error) {
