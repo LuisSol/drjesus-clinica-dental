@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import styled from 'styled-components'
-import useFormValidation from '../utils/useFormValidation'
-import validateContactForm from '../utils/validateContactForm'
-import axios from 'axios'
-import { toast } from 'react-toastify'
+import { useState } from 'react';
+import styled from 'styled-components';
+import useFormValidation from '../utils/useFormValidation';
+import validateContactForm from '../utils/validateContactForm';
+import axios from 'axios';
+import flasher from '../utils/flasher';
 
 const ContactFormStyled = styled.form`    
     margin-top: .5rem;
@@ -62,42 +62,20 @@ const ContactForm = () => {
         axios.post('/api/contact_form', values)
         .then( res => {
             if(res.status === 200) {
-                // success                
-                toast.success('Gracias por tu contacto, reponderemos a la brevedad posible.', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
+                // success  
+                flasher('Gracias por tu contacto, reponderemos a la brevedad posible.', 'success');               
                 resetValues();
                 setSendingMail(false);
             }
             else {
                 // email sent error
-                toast.error('Algo salió mal, intenta de nuevo más tarde.', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
+                flasher('Algo salió mal, intenta de nuevo más tarde.', 'error');                 
             }
         })
-        .catch(
+        .catch(err => {
             // axios error
-            err => {
             console.error(err);
-            toast.error('Algo salió mal, intenta de nuevo más tarde.', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            flasher('Algo salió mal, intenta de nuevo más tarde.', 'error');
         });
     }
     

@@ -1,8 +1,7 @@
-import styled from 'styled-components'
-import Router from 'next/router'
-import { parseCookies } from 'nookies'
-import { toast } from 'react-toastify'
-import { verifyToken } from '../src/utils/firebaseAdmin'
+import styled from 'styled-components';
+import { parseCookies } from 'nookies';
+import { verifyToken } from '../src/utils/firebaseAdmin';
+import flasher from '../src/utils/flasher';
 
 import MainLayout from '../src/components/MainLayout';
 
@@ -20,15 +19,7 @@ const Citas = ({ redirect, flash }) => {
        due to present lack of getServerSide support for redirects from client side */
     if(redirect) {
         if(process.browser) {
-            toast[flash.type](flash.msg, {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-            });
-            Router.push(redirect);
+            flasher(flash.msg, flash.type, redirect);            
         }
         return null;          
     }

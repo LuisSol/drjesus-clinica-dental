@@ -1,10 +1,9 @@
-import { useSelector } from 'react-redux'
-import styled from 'styled-components'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
-import { toast } from 'react-toastify';
-import { storage, auth } from '../utils/firebase'
-import Router from 'next/router'
-import NProgress from 'nprogress'
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { storage, auth } from '../utils/firebase';
+import NProgress from 'nprogress';
+import flasher from '../utils/flasher';
 
 NProgress.configure({ showSpinner: false });
 
@@ -36,50 +35,30 @@ const AvatarForm = ({ url }) => {
     const changeImage = (e) => {
         const file = e.target.files[0]; 
         if( file && file.size > 2000000 ) {
-            toast.warn('El tamaño máximo de imágen es de 2MB',{
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-            })
+            flasher('El tamaño máximo de imágen es de 2MB', 'warn');
         }
         else {            
             /* user could be loged out in another tab / window */            
             if(!user) {
-                toast.warn('Debes ingresar a tu cuenta para acceder a este recurso', {
-                    position: "top-right",
-                    autoClose: 3500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                });
-                return Router.push('/ingresar');
+                return flasher('Debes ingresar a tu cuenta para acceder a este recurso', 
+                        'warn', '/ingresar');                
             }
             // upload file to firebase storage
             const storageRef = storage.ref(`users_avatars/${user.uid}/${user.uid}.`+ 
                                             file.name.split('.').pop());
-            const trask = storageRef.put(file);
+            const uploadTask = storageRef.put(file);
             NProgress.start();
-            trask.on('state_changed',
+            uploadTask.on('state_changed',
                 (/* progress */) => { },
                 (error) => {
                     NProgress.done();
-                    toast.error('Algo salió mal, intentalo de nuevo más tarde', {
-                        position: "top-right",
-                        autoClose: 3500,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: true,
-                    });
+                    flasher('Algo salió mal, intentalo de nuevo más tarde', 
+                            'error');                    
                     console.error(error);
                 },
-                () => {
+                (/* complete */) => {
                     NProgress.done();
-                    trask.snapshot.ref.getDownloadURL()
+                    uploadTask.snapshot.ref.getDownloadURL()
                     .then( finalURL => {
                         // update user profile picture
                         auth.currentUser.updateProfile({
@@ -87,14 +66,8 @@ const AvatarForm = ({ url }) => {
                         })
                         .then(() => setAvatarUrl(finalURL))
                         .catch(error => {
-                            toast.error('Algo salió mal, intentalo de nuevo más tarde', {
-                                position: "top-right",
-                                autoClose: 3500,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: false,
-                                draggable: true,
-                            });
+                            flasher('Algo salió mal, intentalo de nuevo más tarde', 
+                            'error');
                             console.error(error);
                         });                        
                     });
