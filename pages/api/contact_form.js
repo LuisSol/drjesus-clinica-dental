@@ -17,7 +17,7 @@ export default (req, res) => {
     `
     const emailParams = {
       Destination: {
-        ToAddresses: ['luisenrique.solisnavarro@gmail.com'] 
+        ToAddresses: ['banuelosmd@gmail.com'] 
       },
       Message: {
         Subject: {
