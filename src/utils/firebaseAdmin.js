@@ -22,3 +22,7 @@ export const verifyToken = (token) => {
 export const getUserData = (uid) => {
     return admin.auth().getUser(uid);
 }
+
+export const getUserFirestore = (uid) => {
+    return admin.firestore().collection('users').doc(uid).get();
+}

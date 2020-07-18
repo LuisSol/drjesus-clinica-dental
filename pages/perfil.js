@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { parseCookies } from 'nookies';
-import { verifyToken, getUserData } from '../src/utils/firebaseAdmin';
+import { verifyToken, getUserData, getUserFirestore } from '../src/utils/firebaseAdmin';
 import flasher from '../src/utils/flasher';
 
 import MainLayout from '../src/components/MainLayout';
 import AvatarForm from '../src/components/AvatarForm';
+import UserInfoForm from '../src/components/UserInfoForm'
 
 const FullWidthDiv = styled.div`
     width: 100%;
@@ -39,14 +40,7 @@ const Profile = ({ redirect, flash, userData }) => {
                 <ProfileContainer>
                     <h1 className="title">Mi Perfil:</h1>
                     <AvatarForm url={userData.avatar} />
-                    <div>
-                        <p>
-                            <strong>nombre: </strong>
-                            <span>{userData.name}</span>
-                        </p>
-                        <p><strong>correo: </strong><span>{userData.email}</span></p>
-                        <p><strong>teléfono: </strong><span>{userData.phone}</span></p>
-                    </div>
+                    <UserInfoForm {...userData} />
                     <div className="appoiments">
                         <h2>Próximas citas:</h2>
                     </div>
@@ -71,17 +65,28 @@ export const getServerSideProps = async (ctx) => {
     } 
     else {
         try {
-            const { uid } = await verifyToken(auth);
-            const user = (await getUserData(uid)).toJSON();
-            console.log(user);
+            // validate token
+            const { uid } = await verifyToken(auth); 
+            // if token is valid retrieve data from sources
+            const [userAuthData, userFirestoreData] = 
+            await Promise.all([
+                getUserData(uid),
+                getUserFirestore(uid)
+            ])
+
+            const authData = userAuthData.toJSON();
+            const firestoreData = userFirestoreData.data();
+            // set data as props            
             props.userData = {
-                name: user.displayName || null,
-                avatar: user.photoURL || null,
-                email: user.email || null,
-                phone: user.phoneNumber || null
-            }
+                name: authData.displayName || null,
+                avatar: authData.photoURL || null,
+                email: authData.email || null,
+                phone: !firestoreData ? null
+                                      : (firestoreData.phone || null)
+            } 
         }
         catch (error) {
+            // invalid token
             console.log('token invalido');
         }
     }
