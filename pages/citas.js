@@ -1,39 +1,60 @@
-import MainLayout from '../src/components/MainLayout';
-import Router from 'next/router'
-import { setCookie, parseCookies } from 'nookies'
+import styled from 'styled-components';
+import { parseCookies } from 'nookies';
+import { verifyToken } from '../src/utils/firebaseAdmin';
+import flasher from '../src/utils/flasher';
 
-const Citas = () => {    
+import MainLayout from '../src/components/MainLayout';
+
+const FullWidthDiv = styled.div`
+    width: 100%;
+`
+const SchedulerContainer = styled.main`
+    width: 1024px;
+    margin: 0 auto;
+`
+
+const Citas = ({ redirect, flash }) => {  
+    
+    /* if the result is a redirect 
+       due to present lack of getServerSide support for redirects from client side */
+    if(redirect) {
+        if(process.browser) {
+            flasher(flash.msg, flash.type, redirect);            
+        }
+        return null;          
+    }
+
     return (
         <MainLayout title="Citas">
-            <h1>Citas</h1>
+            <FullWidthDiv>
+                <SchedulerContainer>
+                    <h1>Citas</h1>
+                </SchedulerContainer>
+            </FullWidthDiv>
         </MainLayout>
     )
 }
 
-Citas.getInitialProps = async (ctx) => {    
+export const getServerSideProps = async (ctx) => {
+    const props = {}
     const { auth } =  parseCookies(ctx);
     if(!auth) {
-        // Not loged in        
-        setCookie(ctx, 'flash', 
-                  JSON.stringify({ type: 'warn', msg: 'Debes ingresar a tu cuenta para acceder a este recurso' }), 
-                  { maxAge: 60, path: '/' }); 
-        if(process.browser){
-            // client side
-            Router.push('/ingresar'); 
+        props.redirect = '/ingresar'
+        props.flash = {
+            msg: 'Ingresa a tu cuenta para acceder a este recurso',
+            type: 'warn'
         }
-        else {
-            // server side
-            const { res } = ctx;            
-            res.writeHead(302, {
-                Location: '/ingresar'
-            });
-            res.end();
-        }                        
     }
     else {
-        // loged in        
+        try {
+            await verifyToken(auth);
+            console.log('token valido ,', auth);
+        }
+        catch (error) {
+            console.log('token invalido');
+        }
     }
-    return { props: {} }
+    return { props }
 }
 
 export default Citas;

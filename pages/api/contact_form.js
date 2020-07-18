@@ -7,37 +7,41 @@ AWS.config.update({
 })
 
 export default (req, res) => {
-  
-  const emailHTML = `
-    <h1>Solicitud de contacto</h1>
-    <h2>Enviado por: ${req.body.name}</h2>
-    <h2>Correo: ${req.body.email}</h2>
-    <h3>Pregunta:</h3>
-    <p>${req.body.question}</p>
-  `
-  const emailParams = {
-    Destination: {
-      ToAddresses: ['luisenrique.solisnavarro@gmail.com'] 
-    },
-    Message: {
-      Subject: {
-        Charset: 'UTF-8',
-        Data: 'Pregunta en el sitio web drjesusbanuelos.com'
+  if (req.method === 'POST') {
+    const emailHTML = `
+      <h1>Solicitud de contacto</h1>
+      <h2>Enviado por: ${req.body.name}</h2>
+      <h2>Correo: ${req.body.email}</h2>
+      <h3>Pregunta:</h3>
+      <p>${req.body.question}</p>
+    `
+    const emailParams = {
+      Destination: {
+        ToAddresses: ['banuelosmd@gmail.com'] 
       },
-      Body: {
-        Html: {
+      Message: {
+        Subject: {
           Charset: 'UTF-8',
-          Data: emailHTML
+          Data: 'Pregunta en el sitio web drjesusbanuelos.com'
+        },
+        Body: {
+          Html: {
+            Charset: 'UTF-8',
+            Data: emailHTML
+          }
         }
-      }
-    },
-    Source: 'noreply@drjesusbanuelos.com'
-  }
+      },
+      Source: 'noreply@drjesusbanuelos.com'
+    }
 
-  const sendPromise = new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(emailParams).promise();
+    const sendPromise = new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(emailParams).promise();
 
-  return sendPromise
-          .then(data => res.status(200).json({ msg: 'email sent', data}))
-          .catch(err => res.status(500).json({ msg: 'something went wrong', err}))
+    return sendPromise
+            .then(data => res.status(200).json({ msg: 'email sent', data}))
+            .catch(err => res.status(500).json({ msg: 'something went wrong', err}))
+  } 
+  else {
+    res.json({ msg: 'holi'});
+  } 
   
 }

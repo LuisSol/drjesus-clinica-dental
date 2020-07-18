@@ -3,8 +3,7 @@ import { auth, firebase } from '../src/utils/firebase'
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component' 
 import Router from 'next/router'
-import { toast } from 'react-toastify'
-import { parseCookies, destroyCookie } from 'nookies'
+import { parseCookies } from 'nookies'
 
 import MainLayout from '../src/components/MainLayout';
 
@@ -67,17 +66,15 @@ const uiConfig = {
     ]
 }
 
-const Login = ({ flash }) => {
-    
-    if(flash) {
-        toast[flash.type](flash.msg, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            pauseOnHover: false,
-            closeOnClick: true,
-            draggable: true,
-        });
+const Login = ({ redirect}) => {
+
+    /* if the result is a redirect 
+       due to present lack of getServerSide support for redirects from client side */
+    if(redirect) {
+        if(process.browser) {
+            Router.push('/perfil')
+        }
+        return null;          
     }
 
     return (
@@ -103,26 +100,11 @@ const Login = ({ flash }) => {
     )
 }
 
-Login.getInitialProps = async (ctx) => { 
-    const { auth, flash } =  parseCookies(ctx);
-    destroyCookie(ctx, 'flash');
-
-    if(auth) {
-        // The user is already loged in so should be redirected
-        if(process.browser){
-            // client side
-            Router.push('/ingresar'); 
-        } 
-        else {
-            // server side
-            const { res } = ctx;            
-            res.writeHead(302, {
-                Location: '/perfil'
-            });
-            res.end();
-        }                   
-    }
-    return { flash: flash ? JSON.parse(flash) : null }
+export const getServerSideProps = async (ctx) => {
+    const props = {}
+    const { auth } =  parseCookies(ctx);
+    if(auth) props.redirect = '/perfil'
+    return { props }
 }
 
 export default Login;

@@ -30,4 +30,4 @@ yarn-error.log*
 .env.production.local
 
 # SMTP AWS SES 
-/SMTP
+/Services_Credentials
