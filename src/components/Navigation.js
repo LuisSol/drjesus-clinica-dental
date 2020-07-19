@@ -5,7 +5,7 @@ import { auth } from '../utils/firebase'
 import { useSelector } from 'react-redux'
 
 const NavBar = styled.div`
-    width: 1024px; 
+    width: 1020px; 
     height: 70px;
     display: flex;
     align-items: center;
@@ -17,7 +17,7 @@ const NavBar = styled.div`
     img {
         height: 60px;
     }
-    @media (max-width: 1024px) {
+    @media (max-width: 1020px) {
         width: 100%;
     }
     @media (max-width: 750px) {

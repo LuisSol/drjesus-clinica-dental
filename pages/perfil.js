@@ -78,11 +78,11 @@ export const getServerSideProps = async (ctx) => {
             const firestoreData = userFirestoreData.data();
             // set data as props            
             props.userData = {
-                name: authData.displayName || null,
-                avatar: authData.photoURL || null,
-                email: authData.email || null,
-                phone: !firestoreData ? null
-                                      : (firestoreData.phone || null)
+                name: authData.displayName || '',
+                avatar: authData.photoURL || '',
+                email: authData.email || '',
+                phone: !firestoreData ? ''
+                                      : (firestoreData.phone || '')
             } 
         }
         catch (error) {
