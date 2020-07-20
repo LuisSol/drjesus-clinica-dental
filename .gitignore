@@ -31,3 +31,6 @@ yarn-error.log*
 
 # SMTP AWS SES 
 /Services_Credentials
+
+# ADMIN UTILS
+/admin_utils

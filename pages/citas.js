@@ -3,12 +3,13 @@ import { parseCookies } from 'nookies';
 import { verifyToken } from '../src/utils/firebaseAdmin';
 import flasher from '../src/utils/flasher';
 import moment from 'moment'
+import { today, dateFieldToEpoch, epochToDateField } from '../src/utils/dateFunctions'
 
 moment.locale('es');
 
 import MainLayout from '../src/components/MainLayout';
 import Scheduler from '../src/components/Scheduler'
-import AppoimentsFooter from '../src/components/AppoimentsFooter'
+import AppointmentsFooter from '../src/components/AppointmentsFooter'
 
 const FullWidthDiv = styled.div`
     width: 100%;
@@ -22,12 +23,6 @@ const SchedulerContainer = styled.main`
     }
 `
 
-const today = () => {
-    return Date.now();
-}
-const formatDate = (date) => {
-    return moment(date).format('YYYY-MM-DD');
-}
 const services = [
     {id: 1, title: 'service 1'},
     {id: 2, title: 'service 2'},
@@ -46,9 +41,8 @@ const Citas = ({ redirect, flash, date }) => {
         return null;          
     }
 
-    const handleChange = (e) => {  
-        /* getTime() returns one day offset thats why sum 86400000*/      
-        setCurrentDate(new Date(e.target.value).getTime() + 86400000);
+    const handleChange = (e) => {           
+        setCurrentDate(dateFieldToEpoch(e.target.value));
     }
 
     console.log(currentDate);
@@ -58,34 +52,7 @@ const Citas = ({ redirect, flash, date }) => {
             <FullWidthDiv>
                 <SchedulerContainer>
                     <h1>Agenda tu cita:</h1>
-                    <div>
-                        <label>Fecha: </label>
-                        <input 
-                            type="date" 
-                            value={formatDate(currentDate)} 
-                            min={formatDate(today())}  
-                            onChange={handleChange}                     
-                        />
-                        <span>{moment(currentDate).format('dddd LL')}</span>
-                    </div>
-                    <div>
-                        <label>Servicio: </label>
-                        <select>    
-                            <option>--- En que te podemos ayudar ? ---</option>
-                        {                            
-                            services.map( service => 
-                                <option 
-                                    key={service.id}
-                                    value={service.title}
-                                >
-                                    {service.title}
-                                </option>
-                            )
-                        }
-                        </select>                        
-                    </div>
-                    <div>
-                        <span>Duración estimada: </span>
+                    <div>                        
                         <div>
                             <label>
                                 A nombre de:
@@ -98,15 +65,44 @@ const Citas = ({ redirect, flash, date }) => {
                                 <input />
                             </label>
                         </div>
-                        <button>Agendar</button>
+                    </div>
+                    <div>
+                        <label>Servicio: </label>
+                        <select>    
+                            <option>--- En que te podemos servir ? ---</option>
+                        {                            
+                            services.map( service => 
+                                <option 
+                                    key={service.id}
+                                    value={service.title}
+                                >
+                                    {service.title}
+                                </option>
+                            )
+                        }
+                        </select>  
+                        <div>
+                        <span>Duración estimada: </span>
+                        </div>                      
+                    </div>                    
+                    <div>
+                        <label>Fecha: </label>
+                        <input 
+                            type="date" 
+                            value={epochToDateField(currentDate)} 
+                            min={epochToDateField(today())}  
+                            onChange={handleChange}                     
+                        />
+                        <span>{moment(currentDate).format('dddd LL')}</span>
                     </div> 
                     <div>                   
-                        <Scheduler /> 
+                        <Scheduler 
+                            currentDate={currentDate}
+                        /> 
                     </div>                   
-                </SchedulerContainer>
-                
+                </SchedulerContainer>                
             </FullWidthDiv>
-            <AppoimentsFooter />
+            <AppointmentsFooter />
         </MainLayout>
     )
 }
@@ -124,7 +120,6 @@ export const getServerSideProps = async (ctx) => {
     else {
         try {
             await verifyToken(auth);
-            console.log('token valido ,', auth);
         }
         catch (error) {
             console.log('token invalido');

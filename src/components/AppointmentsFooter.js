@@ -61,7 +61,7 @@ const BigFooterContainer = styled.footer`
     }
 `
 
-const AppoimentsFooter = () => (
+const appointmentsFooter = () => (
     <BigFooterContainer>
         <img src="/images/HERO5.jpg" alt="sonrisas" />
         <div className="title-container">
@@ -76,4 +76,4 @@ const AppoimentsFooter = () => (
 )
 
 
-export default AppoimentsFooter;
+export default appointmentsFooter;
