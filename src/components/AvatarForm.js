@@ -5,8 +5,6 @@ import { storage, auth } from '../utils/firebase';
 import NProgress from 'nprogress';
 import flasher from '../utils/flasher';
 
-NProgress.configure({ showSpinner: false });
-
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -56,16 +54,19 @@ const AvatarForm = ({ url }) => {
                             'error');                    
                     console.error(error);
                 },
-                (/* complete */) => {
-                    NProgress.done();
+                (/* complete */) => {                    
                     uploadTask.snapshot.ref.getDownloadURL()
                     .then( finalURL => {
                         // update user profile picture
                         auth.currentUser.updateProfile({
                             photoURL: finalURL
                         })
-                        .then(() => setAvatarUrl(finalURL))
+                        .then(() => {
+                            NProgress.done();
+                            setAvatarUrl(finalURL)
+                        })
                         .catch(error => {
+                            NProgress.done();
                             flasher('Algo salió mal, intentalo de nuevo más tarde', 
                             'error');
                             console.error(error);

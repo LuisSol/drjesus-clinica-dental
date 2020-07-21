@@ -4,6 +4,7 @@ import validateUserInfo from '../utils/validateUserInfo';
 import flasher from '../utils/flasher';
 import { useSelector } from 'react-redux';
 import { auth, db } from '../utils/firebase';
+import Nprogress from 'nprogress'
 
 const usersRef = db.collection('users');
 const InfoForm = styled.form`       
@@ -64,7 +65,8 @@ const UserInfoForm = (userInfo) => {
             return flasher('Debes ingresar a tu cuenta para acceder a este recurso', 
                            'warn', '/ingresar');
         }
-        // update values on firebase        
+        // update values on firebase 
+        Nprogress.start();       
         Promise.all([
             auth.currentUser.updateProfile({            
                 displayName: values.name
@@ -73,8 +75,12 @@ const UserInfoForm = (userInfo) => {
                 phone: values.phone
             })
         ])        
-        .then(() => setIsEditing(!isEditing))
+        .then(() => {
+            Nprogress.done();
+            setIsEditing(!isEditing)
+        })
         .catch((err) => {
+            Nprogress.done();
             flasher('Algo salió mal intentalo de nuevo más tarde', 'error');
             console.error(err);
         });

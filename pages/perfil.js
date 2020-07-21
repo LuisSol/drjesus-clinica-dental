@@ -11,15 +11,18 @@ const FullWidthDiv = styled.div`
     width: 100%;
 `
 const ProfileContainer = styled.main`
-    width: 1024px;
+    width: 1020px;
     margin: 0 auto;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-weight: 300;
-    .title, .appoiments, .services  {
+    .title, .appointments, .services  {
         align-self: flex-start;
+    }
+    @media (max-width: 1020px) {
+        width: 100%;
     }
 `
 
@@ -41,7 +44,7 @@ const Profile = ({ redirect, flash, userData }) => {
                     <h1 className="title">Mi Perfil:</h1>
                     <AvatarForm url={userData.avatar} />
                     <UserInfoForm {...userData} />
-                    <div className="appoiments">
+                    <div className="appointments">
                         <h2>Próximas citas:</h2>
                     </div>
                     <div className="services">
@@ -78,11 +81,11 @@ export const getServerSideProps = async (ctx) => {
             const firestoreData = userFirestoreData.data();
             // set data as props            
             props.userData = {
-                name: authData.displayName || null,
-                avatar: authData.photoURL || null,
-                email: authData.email || null,
-                phone: !firestoreData ? null
-                                      : (firestoreData.phone || null)
+                name: authData.displayName || '',
+                avatar: authData.photoURL || '',
+                email: authData.email || '',
+                phone: !firestoreData ? ''
+                                      : (firestoreData.phone || '')
             } 
         }
         catch (error) {

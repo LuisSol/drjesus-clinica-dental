@@ -26,3 +26,7 @@ export const getUserData = (uid) => {
 export const getUserFirestore = (uid) => {
     return admin.firestore().collection('users').doc(uid).get();
 }
+
+export const getServicesData = () => {
+    return admin.firestore().collection('services').get();
+}
