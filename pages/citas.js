@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 import { parseCookies } from 'nookies';
-import { verifyToken } from '../src/utils/firebaseAdmin';
 import flasher from '../src/utils/flasher';
-import moment from 'moment'
-import { today, dateFieldToEpoch, epochToDateField } from '../src/utils/dateFunctions'
+import moment from 'moment';
+import { today, dateFieldToEpoch, epochToDateField } from '../src/utils/dateFunctions';
+import { verifyToken, getUserData, getUserFirestore, getServicesData } 
+from '../src/utils/firebaseAdmin';
 
 moment.locale('es');
 
 import MainLayout from '../src/components/MainLayout';
 import Scheduler from '../src/components/Scheduler'
 import AppointmentsFooter from '../src/components/AppointmentsFooter'
+import AppointmentForm from '../src/components/AppointmentForm'
 
 const FullWidthDiv = styled.div`
     width: 100%;
@@ -23,13 +25,7 @@ const SchedulerContainer = styled.main`
     }
 `
 
-const services = [
-    {id: 1, title: 'service 1'},
-    {id: 2, title: 'service 2'},
-    {id: 3, title: 'service 3'},
-]
-
-const Citas = ({ redirect, flash, date }) => {  
+const Citas = ({ redirect, flash, date, userData, services, selectedService }) => {  
     const [currentDate, setCurrentDate] = React.useState(date || today());    
 
     /* if the result is a redirect 
@@ -45,46 +41,16 @@ const Citas = ({ redirect, flash, date }) => {
         setCurrentDate(dateFieldToEpoch(e.target.value));
     }
 
-    console.log(currentDate);
-
     return (
         <MainLayout title="Citas">
             <FullWidthDiv>
                 <SchedulerContainer>
                     <h1>Agenda tu cita:</h1>
-                    <div>                        
-                        <div>
-                            <label>
-                                A nombre de:
-                                <input />
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                Telefono:
-                                <input />
-                            </label>
-                        </div>
-                    </div>
-                    <div>
-                        <label>Servicio: </label>
-                        <select>    
-                            <option>--- En que te podemos servir ? ---</option>
-                        {                            
-                            services.map( service => 
-                                <option 
-                                    key={service.id}
-                                    value={service.title}
-                                >
-                                    {service.title}
-                                </option>
-                            )
-                        }
-                        </select>  
-                        <div>
-                        <span>Duración estimada: </span>
-                        </div>                      
-                    </div>                    
+                    <AppointmentForm 
+                        {...userData} 
+                        services={services} 
+                        service={selectedService || ''}
+                    /> 
                     <div>
                         <label>Fecha: </label>
                         <input 
@@ -94,12 +60,10 @@ const Citas = ({ redirect, flash, date }) => {
                             onChange={handleChange}                     
                         />
                         <span>{moment(currentDate).format('dddd LL')}</span>
-                    </div> 
-                    <div>                   
-                        <Scheduler 
-                            currentDate={currentDate}
-                        /> 
-                    </div>                   
+                    </div>                 
+                    <Scheduler 
+                        currentDate={currentDate}
+                    />                                      
                 </SchedulerContainer>                
             </FullWidthDiv>
             <AppointmentsFooter />
@@ -119,7 +83,26 @@ export const getServerSideProps = async (ctx) => {
     }
     else {
         try {
-            await verifyToken(auth);
+            const { uid} = await verifyToken(auth);
+            // valid Token
+            // retrieve data from the database
+            const [userAuthData, userFireStoreData, servicesData] = await Promise.all([
+                getUserData(uid),
+                getUserFirestore(uid),
+                getServicesData()
+            ]);
+            const authData = userAuthData.toJSON();
+            const userData = userFireStoreData.data();
+            // set user data as props
+            props.userData = {
+                name: authData.displayName || '',
+                phone: userData.phone || ''
+            }
+            // populate the services from the data in the firestore database
+            props.services = [];
+            servicesData.docs.forEach(doc => {                
+                props.services.push({ ...doc.data(), id: doc.id });
+            });           
         }
         catch (error) {
             console.log('token invalido');
