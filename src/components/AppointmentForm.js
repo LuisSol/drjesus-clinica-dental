@@ -1,7 +1,13 @@
-import { useState } from 'react'
-import styled from 'styled-components'
-import useFormvalidation from '../utils/useFormValidation'
-import validateAppointmentForm from '../utils/validateAppointmentForm'
+import { useState } from 'react';
+import styled from 'styled-components';
+import useFormvalidation from '../utils/useFormValidation';
+import validateAppointmentForm from '../utils/validateAppointmentForm';
+import { today, dateFieldToEpoch, epochToDateField } from '../utils/dateFunctions';
+import moment from 'moment';
+
+moment.locale('es');
+
+import Scheduler from './Scheduler'
 
 const AppointmenFields = styled.form`
     label {
@@ -27,18 +33,20 @@ const AppointmenFields = styled.form`
     }
 `
 
-const AppointmentForm = ({ name, phone, service, services }) => {
-    const [textDuration, setTextDuration] = useState('');
+const AppointmentForm = ({ date, name, phone, service, services }) => {
+    const [serviceDuration, setServiceDuration] = useState(services[0].timeBlocks)
+    const [textDuration, setTextDuration] = useState(services[0].duration);
 
     const onValidValues = () => {
         console.log('valid values!!!')
     }
-
+    
     const {handleSubmit, handleBlur, handleChange, values, errors} = 
-           useFormvalidation({ name, phone, service },validateAppointmentForm,onValidValues);
+           useFormvalidation({ name, phone, service, date: date || epochToDateField(today()) },
+                               validateAppointmentForm, onValidValues);
     
     return (       
-        <AppointmenFields onSubmit={handleSubmit}>                        
+        <AppointmenFields onSubmit={handleSubmit} >                        
             <label>
                 <span>A nombre de:</span>
                 <input 
@@ -76,7 +84,7 @@ const AppointmentForm = ({ name, phone, service, services }) => {
                     value={values.service}
                     // set the dataset values for the selected service
                     onChange={(e) => {
-                        console.log(e.target.selectedOptions[0].dataset.timeblocks);
+                        setServiceDuration(e.target.selectedOptions[0].dataset.timeblocks);
                         setTextDuration(e.target.selectedOptions[0].dataset.duration);
                         handleChange(e);
                     }}
@@ -99,9 +107,25 @@ const AppointmentForm = ({ name, phone, service, services }) => {
             </label> 
             <label>                
                 <span>Duración estimada: {textDuration}</span>
-            </label>                     
-        </AppointmenFields>
-        
+            </label>
+            <div>
+                <label>Fecha: </label>
+                <input 
+                    type="date" 
+                    value={values.date} 
+                    min={epochToDateField(today())}  
+                    onChange={handleChange}     
+                    id="date"
+                    name="date"                
+                />
+                <span>{moment(dateFieldToEpoch(values.date)).format('dddd LL')}</span>
+            </div>                 
+            <Scheduler 
+                currentDate={values.date}
+                currentServiceDuration={serviceDuration}
+                errors={errors}
+            />                     
+        </AppointmenFields>        
     )
 }
 

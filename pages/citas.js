@@ -1,15 +1,10 @@
 import styled from 'styled-components';
 import { parseCookies } from 'nookies';
 import flasher from '../src/utils/flasher';
-import moment from 'moment';
-import { today, dateFieldToEpoch, epochToDateField } from '../src/utils/dateFunctions';
 import { verifyToken, getUserData, getUserFirestore, getServicesData } 
 from '../src/utils/firebaseAdmin';
 
-moment.locale('es');
-
 import MainLayout from '../src/components/MainLayout';
-import Scheduler from '../src/components/Scheduler'
 import AppointmentsFooter from '../src/components/AppointmentsFooter'
 import AppointmentForm from '../src/components/AppointmentForm'
 
@@ -25,8 +20,7 @@ const SchedulerContainer = styled.main`
     }
 `
 
-const Citas = ({ redirect, flash, date, userData, services, selectedService }) => {  
-    const [currentDate, setCurrentDate] = React.useState(date || today());    
+const Citas = ({ redirect, flash, date, userData, services, selectedService }) => {         
 
     /* if the result is a redirect 
        due to present lack of getServerSide support for redirects from client side */
@@ -35,10 +29,6 @@ const Citas = ({ redirect, flash, date, userData, services, selectedService }) =
             flasher(flash.msg, flash.type, redirect);            
         }
         return null;          
-    }
-
-    const handleChange = (e) => {           
-        setCurrentDate(dateFieldToEpoch(e.target.value));
     }
 
     return (
@@ -50,20 +40,8 @@ const Citas = ({ redirect, flash, date, userData, services, selectedService }) =
                         {...userData} 
                         services={services} 
                         service={selectedService || ''}
-                    /> 
-                    <div>
-                        <label>Fecha: </label>
-                        <input 
-                            type="date" 
-                            value={epochToDateField(currentDate)} 
-                            min={epochToDateField(today())}  
-                            onChange={handleChange}                     
-                        />
-                        <span>{moment(currentDate).format('dddd LL')}</span>
-                    </div>                 
-                    <Scheduler 
-                        currentDate={currentDate}
-                    />                                      
+                        date={date}
+                    />                                                          
                 </SchedulerContainer>                
             </FullWidthDiv>
             <AppointmentsFooter />

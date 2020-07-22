@@ -1,7 +1,7 @@
-import { useState, useEffect, useMemo } from 'react'
-import styled from 'styled-components'
-import { rtdb } from '../utils/firebase'
-import { epochToDateField } from '../utils/dateFunctions'
+import { useState, useEffect, useMemo } from 'react';
+import styled from 'styled-components';
+import { rtdb } from '../utils/firebase';
+import flasher from '../utils/flasher'
 
 const SchedulerContainer = styled.div`
     border: 1px solid #666;
@@ -9,20 +9,27 @@ const SchedulerContainer = styled.div`
     margin: 2rem 0;
     width: 50%;
     overflow: hidden;
-    div:last-child {
+    button:last-child {
        border: 0;
     }
     
 `
-const TimeUnit = styled.div`
+const TimeUnit = styled.button`
+    display: block;
+    width: 100%;
     height: 32px;
     position: relative;
+    border: 0;
     border-bottom: 1px solid #ddd;
+    background-color: transparent;
     span {
         position: absolute;
         top: 3px;
         right: 3px;
         color: #444;
+    }
+    &:focus {
+        outline-color: #1193e7;
     }
     &.disabled {
         pointer-events: none;
@@ -48,9 +55,9 @@ const dayPlaceHolder = [
     {hour: '7_00pm'}, {hour: '7_30pm'},
 ];
 
-const Scheduler = ({ currentDate }) => {
+const Scheduler = ({ currentDate, currentServiceDuration, errors }) => {
     const [dayAppointments, setDayAppointments] = useState(dayPlaceHolder);
-    let dayRef = useMemo(() => rtdb.ref(`days/${epochToDateField(currentDate)}`), [currentDate]);
+    let dayRef = useMemo(() => rtdb.ref(`days/${currentDate}`), [currentDate]);
 
     useEffect(() => {
         dayRef.on('value', snap => {
@@ -61,21 +68,38 @@ const Scheduler = ({ currentDate }) => {
         }
     }, [dayRef]);
 
-    const handleClick = (e) => {
-        console.log(e.target.dataset.index);
+    const handleClick = (e) => {        
+        let selectedHourIndex = e.target.dataset.index;
+        let timeSpanNeeded = parseInt(currentServiceDuration) + parseInt(selectedHourIndex);
+        
+        /* Validate selected hour according to the seleted service */
+        if (timeSpanNeeded > dayAppointments.length) {
+            flasher('La hora que elegiste para tu servicio supera el horario de trabajo', 'error');
+            e.preventDefault();  
+            return;
+        }               
+        for (let i = selectedHourIndex; i < timeSpanNeeded; i++) {
+            if(dayAppointments[i].appointment) {
+                flasher('Tu servicio requiere de más tiempo disponible', 'error');
+                e.preventDefault();
+                return;
+            }
+        }
+        // before the first validation errors.isEmpty could be undefined        
+        if( errors.isEmpty && !errors.isEmpty()) flasher('Revisa los datos ingresados', 'error');       
     }
 
-    return (
+
+    return (        
         <SchedulerContainer>
-        {
-            
+        {                
             dayAppointments.map((time, index) =>
                 <TimeUnit
                     data-index={index} 
                     key={`${time.hour}${index}`}
                     onClick={handleClick}
                     className={ time.appointment ? 'disabled' : ''}
-                >                
+                >           
                     <span>{time.hour.replace('_',':')}</span>
                     { 
                         time.appointment?.timeBlocks &&
@@ -84,9 +108,9 @@ const Scheduler = ({ currentDate }) => {
                         </TimeBlock>
                     }
                 </TimeUnit>
-            )
-        } 
-        </SchedulerContainer>
+            )           
+        }         
+        </SchedulerContainer>       
     )
 }
 
