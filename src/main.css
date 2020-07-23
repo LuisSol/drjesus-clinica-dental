@@ -40,13 +40,48 @@ a {
 .link-btn:focus {
     outline: none;
 }
+/* APPOINTMENT CONFIRMATION MODAL */
+.appointment-confirmation-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0; 
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    z-index: 11; 
+}
+.appointment-confirmation-content {
+    position: absolute;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+    overflow: auto;
+    background-color: white;
+    -webkit-overflow-scrolling: touch;
+} 
+/* MODAL TRANSITION */
+.ReactModal__Overlay {
+    transform: scale(0);
+    transition: transform 200ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+    transform: scale(1);
+}
+
+.ReactModal__Overlay--before-close{
+    transform: scale(0);
+}
+
 /* DISABLE ARROWS FROM INPUT TYPE NUMBER */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-/* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
 }

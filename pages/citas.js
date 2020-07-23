@@ -73,6 +73,7 @@ export const getServerSideProps = async (ctx) => {
             const userData = userFireStoreData.data();
             // set user data as props
             props.userData = {
+                uid,
                 name: authData.displayName || '',
                 phone: userData.phone || ''
             }

@@ -38,8 +38,10 @@ const TimeUnit = styled.button`
 const TimeBlock = styled.div`
     position: absolute;
     top: 0;
-    background-color: #1b3891;
-    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #1b3891;    
     z-index: 10;
     display: flex;
     align-items: center;
@@ -55,7 +57,7 @@ const dayPlaceHolder = [
     {hour: '7_00pm'}, {hour: '7_30pm'},
 ];
 
-const Scheduler = ({ currentDate, currentServiceDuration, errors }) => {
+const Scheduler = ({ currentDate, currentServiceDuration, errors, setSelectedHour }) => {
     const [dayAppointments, setDayAppointments] = useState(dayPlaceHolder);
     let dayRef = useMemo(() => rtdb.ref(`days/${currentDate}`), [currentDate]);
 
@@ -69,8 +71,8 @@ const Scheduler = ({ currentDate, currentServiceDuration, errors }) => {
     }, [dayRef]);
 
     const handleClick = (e) => {        
-        let selectedHourIndex = e.target.dataset.index;
-        let timeSpanNeeded = parseInt(currentServiceDuration) + parseInt(selectedHourIndex);
+        let selectedHourIndex = parseInt(e.target.dataset.index);
+        let timeSpanNeeded = parseInt(currentServiceDuration) + selectedHourIndex;
         
         /* Validate selected hour according to the seleted service */
         if (timeSpanNeeded > dayAppointments.length) {
@@ -86,7 +88,14 @@ const Scheduler = ({ currentDate, currentServiceDuration, errors }) => {
             }
         }
         // before the first validation errors.isEmpty could be undefined        
-        if( errors.isEmpty && !errors.isEmpty()) flasher('Revisa los datos ingresados', 'error');       
+        if( errors.isEmpty && !errors.isEmpty()) {
+            flasher('Revisa los datos ingresados', 'error');
+            return;
+        }   
+        setSelectedHour({
+            index: selectedHourIndex,
+            hour: e.target.firstChild.innerText
+        });    
     }
 
 
