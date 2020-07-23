@@ -75,7 +75,7 @@ export const getServerSideProps = async (ctx) => {
             props.userData = {
                 uid,
                 name: authData.displayName || '',
-                phone: userData.phone || ''
+                phone: userData?.phone || ''
             }
             // populate the services from the data in the firestore database
             props.services = [];
