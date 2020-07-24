@@ -45,22 +45,27 @@ const AppointmentConfirmation = ({
 
     const scheduleAppointment = () => {
         Nprogress.start();
-        // to compose a Multipath update for firebase rt database
-        const updateObj = {}
         let hourIndex = parseInt(selectedHour.index);        
         let timeSpan = parseInt(serviceDuration) + hourIndex; 
+        // to compose a Multipath update for firebase rt database
+        const updateObj = {}
+        // to compose a Multipath update for easily cancel appointments
+        const cancelPaths = [];        
         // Multipath updates are done with an obj with paths as keys and the desired value for the database               
-        updateObj[`days/${date}/${selectedHour.index}/appointment`] = { 
+        updateObj[`days/${date}/${selectedHour.index}/appointment/${uid}`] = { 
             uid, name, phone, service, timeBlocks: serviceDuration 
+        }  
+        cancelPaths.push(`days/${date}/${selectedHour.index}/appointment/${uid}`);      
+        // update the related hours for multi-timeblocks services
+        for(let i = hourIndex + 1; i < timeSpan; i++ ) {
+            updateObj[`days/${date}/${i}/appointment`] = uid;
+            cancelPaths.push(`days/${date}/${i}/appointment`);
         }
         // Create a new branch for the appointment with an epoch timestamp for the selected date / hour
         let epochTimeStamp = dateFieldToEpoch(date) + msDayStart + (msTimeBlock * hourIndex);
+        cancelPaths.push(`appointments/${uid}/${epochTimeStamp}`); 
         updateObj[`appointments/${uid}/${epochTimeStamp}`] = {
-            service, name, timeStamp: epochTimeStamp
-        }
-        // update the related hours for multi-timeblocks services
-        for(let i = hourIndex + 1; i < timeSpan; i++ ) {
-            updateObj[`days/${date}/${i}/appointment`] = true;
+            service, name, timeStamp: epochTimeStamp, cancelPaths
         }
         // perform the update in the firebase database
         root.update(updateObj)

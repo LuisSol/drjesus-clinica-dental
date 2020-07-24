@@ -34,6 +34,9 @@ const TimeUnit = styled.button`
     &.disabled {
         pointer-events: none;
     }
+    &:hover {
+        cursor: pointer;
+    }
 `
 const TimeBlock = styled.div`
     position: absolute;
@@ -46,7 +49,7 @@ const TimeBlock = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fcfcfc;
+    color: #fcfcfc;    
 `
 
 const dayPlaceHolder = [
@@ -102,22 +105,27 @@ const Scheduler = ({ currentDate, currentServiceDuration, errors, setSelectedHou
     return (        
         <SchedulerContainer>
         {                
-            dayAppointments.map((time, index) =>
-                <TimeUnit
-                    data-index={index} 
-                    key={`${time.hour}${index}`}
-                    onClick={handleClick}
-                    className={ time.appointment ? 'disabled' : ''}
-                >           
-                    <span>{time.hour.replace('_',':')}</span>
-                    { 
-                        time.appointment?.timeBlocks &&
-                        <TimeBlock style={{height: 32*time.appointment.timeBlocks}}>
-                            No disponible
-                        </TimeBlock>
-                    }
-                </TimeUnit>
-            )           
+            dayAppointments.map((time, index) => {                
+                const timeBlocks = !time.appointment 
+                                   ? null
+                                   : Object.values(time.appointment)[0].timeBlocks                                   
+                        
+                return (
+                    <TimeUnit
+                        data-index={index} 
+                        key={`${time.hour}${index}`}
+                        onClick={handleClick}
+                        className={ time.appointment ? 'disabled' : ''}
+                    >           
+                        <span>{time.hour.replace('_',':')}</span>
+                        { 
+                            timeBlocks &&
+                            <TimeBlock style={{height: 32*timeBlocks}}>
+                                No disponible
+                            </TimeBlock>
+                        }
+                    </TimeUnit>
+            )})           
         }         
         </SchedulerContainer>       
     )

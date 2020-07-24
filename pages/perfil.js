@@ -12,7 +12,8 @@ moment.locale('es');
 import MainLayout from '../src/components/MainLayout';
 import AvatarForm from '../src/components/AvatarForm';
 import UserInfoForm from '../src/components/UserInfoForm';
-import AppointmentInfoCard from '../src/components/AppointmentInfoCard';
+import UpcomingAppoinments from '../src/components/UpcomingAppointments';
+import HistoryAppointments from '../src/components/HistoryAppointments'
 
 const FullWidthDiv = styled.div`
     width: 100%;
@@ -60,7 +61,7 @@ const Profile = ({ redirect, flash, userData }) => {
     useEffect(() => {
         // retrieve upcoming appoinments
         userAppointmentsRef.child(userData.uid).orderByKey().startAt(today().toString())
-        .limitToFirst(10).once('value', snap => setUpcommingAppoinments(snap.val()));        
+        .limitToFirst(10).on('value', snap => setUpcommingAppoinments(snap.val()));        
         // retrieve past appoinments
         userAppointmentsRef.child(userData.uid).orderByKey().endAt(today().toString())
         .limitToLast(10).once('value', snap => setPastAppoinments(snap.val()));
@@ -76,35 +77,8 @@ const Profile = ({ redirect, flash, userData }) => {
                     <h1 className="title">Mi Perfil:</h1>
                     <AvatarForm url={userData.avatar} />
                     <UserInfoForm {...userData} />
-                    <div className="appointments">
-                        <h2>Próximas citas:</h2>
-                        <small>* Las citas deben ser canceladas al menos 1 hora antes.</small>
-                        {
-                            upcomingAppoinments &&
-                            Object.values(upcomingAppoinments).map(appointment =>
-                                <AppointmentInfoCard
-                                    key={appointment.timeStamp}
-                                    {...appointment}
-                                >
-                                    <button 
-                                        className="link-btn secunday-btn cancel-btn"                                        
-                                    >Cancelar</button>
-                                </AppointmentInfoCard>
-                            )
-                        }
-                    </div>
-                    <div className="past">
-                        <h2>Historial:</h2>
-                        {
-                            pastAppoinments &&
-                            Object.values(pastAppoinments).map(appointment => 
-                                <AppointmentInfoCard
-                                    key={appointment.timeStamp}
-                                    {...appointment}
-                                />
-                            )
-                        }
-                    </div>                    
+                    <UpcomingAppoinments upcomingAppoinments={upcomingAppoinments} />
+                    <HistoryAppointments pastAppoinments={pastAppoinments} />                   
                 </ProfileContainer>
             </FullWidthDiv>
         </MainLayout>

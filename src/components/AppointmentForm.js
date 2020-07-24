@@ -13,7 +13,7 @@ moment.locale('es');
 import Scheduler from './Scheduler'
 import AppointmentConfirmation from './AppointmentConfirmation'
 
-const AppointmenFields = styled.form`
+const AppointmenFields = styled.form`   
     label {
         display: block;
         margin-top: 1.2rem;        
@@ -146,7 +146,8 @@ const AppointmentForm = ({ date, name, phone, service, services, uid }) => {
                     name="date"                
                 />
                 <span>{moment(dateFieldToEpoch(values.date)).format('dddd LL')}</span>
-            </div>                 
+            </div> 
+            <small>* Una vez completados los datos selecciona la hora que deseas</small>                
             <Scheduler 
                 currentDate={values.date}
                 currentServiceDuration={serviceDuration}
