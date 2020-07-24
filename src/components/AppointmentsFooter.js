@@ -20,6 +20,7 @@ const BigFooterContainer = styled.footer`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: top;
         z-index: -1;
     }
     .title-container {
@@ -63,10 +64,10 @@ const BigFooterContainer = styled.footer`
 
 const appointmentsFooter = () => (
     <BigFooterContainer>
-        <img src="/images/HERO5.jpg" alt="sonrisas" />
+        <img src="/images/citas_footer.jpg" alt="servicio en el dentista" />
         <div className="title-container">
-            <h1>CONOCE NUESTROS <br />SERVICIOS</h1>
-            <h2>Necesitas más información ? conoce los detalles aquí:</h2>
+            <h1>CONOCE NUESTROS<br />SERVICIOS</h1>
+            <h2>Necesitas más información ?<br />conoce los detalles aquí:</h2>
             <Link href="/servicios">
                 <a className="link-btn secundary-btn">Más información</a>
             </Link>

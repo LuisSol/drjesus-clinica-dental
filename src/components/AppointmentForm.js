@@ -13,7 +13,8 @@ moment.locale('es');
 import Scheduler from './Scheduler'
 import AppointmentConfirmation from './AppointmentConfirmation'
 
-const AppointmenFields = styled.form`   
+const AppointmenFields = styled.form` 
+    flex: 1; 
     label {
         display: block;
         margin-top: 1.2rem;        
@@ -25,15 +26,30 @@ const AppointmenFields = styled.form`
         border: 0;
         border-bottom: 1px solid #666;        
     }
+    input#phone {
+        width: 11ch;
+    }
+    input#date {
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+    }
     input:focus {
         outline:  none;
     }
     input.error {
         border-color: red;
-    }
+    }    
     small.error {
         position:absolute;
         color: red;
+    }
+    .date {
+        font-weight: 300;        
+    }
+    @media (max-width: 400px) {
+        input#date {
+            display: block;
+        }    
     }
 `
 
@@ -72,8 +88,9 @@ const AppointmentForm = ({ date, name, phone, service, services, uid }) => {
                 serviceDuration={serviceDuration}
                 selectedHour={selectedHour}
             />  
-        </ReactModal>    
-        <AppointmenFields onSubmit={handleSubmit} >                        
+        </ReactModal>           
+        <AppointmenFields onSubmit={handleSubmit} >
+            <h1>Agenda tu cita:</h1>                         
             <label>
                 <span>A nombre de:</span>
                 <input 
@@ -145,8 +162,9 @@ const AppointmentForm = ({ date, name, phone, service, services, uid }) => {
                     id="date"
                     name="date"                
                 />
-                <span>{moment(dateFieldToEpoch(values.date)).format('dddd LL')}</span>
-            </div> 
+                <span className="date">{moment(dateFieldToEpoch(values.date)).format('dddd LL')}</span>
+            </div>
+            <br /> 
             <small>* Una vez completados los datos selecciona la hora que deseas</small>                
             <Scheduler 
                 currentDate={values.date}

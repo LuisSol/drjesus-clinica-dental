@@ -7,7 +7,7 @@ const SchedulerContainer = styled.div`
     border: 1px solid #666;
     border-radius: 10px;
     margin: 2rem 0;
-    width: 50%;
+    width: 100%;
     overflow: hidden;
     button:last-child {
        border: 0;
@@ -45,7 +45,7 @@ const TimeBlock = styled.div`
     right: 0;
     bottom: 0;
     background-color: #1b3891;    
-    z-index: 10;
+    z-index: 6;
     display: flex;
     align-items: center;
     justify-content: center;

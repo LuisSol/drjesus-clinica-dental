@@ -105,13 +105,13 @@ const MobileMenuBtn = styled.button`
         transition: all ease 200ms;
     }
     #sup.open {        
-        transform: rotate(45deg) translate(9px, 7px);
+        transform: rotate(45deg) translate(6px, 6px);
     }
     #med.open {
         opacity: 0;
     }
     #inf.open {        
-        transform: rotate(-45deg) translate(8px, -5px);
+        transform: rotate(-45deg) translate(6px, -6px);
     }
 `
 const DropDown = styled.div`    

@@ -7,6 +7,7 @@ from '../src/utils/firebaseAdmin';
 import MainLayout from '../src/components/MainLayout';
 import AppointmentsFooter from '../src/components/AppointmentsFooter'
 import AppointmentForm from '../src/components/AppointmentForm'
+import DentistsSvg from '../src/components/DentistsSvg'
 
 const FullWidthDiv = styled.div`
     width: 100%;
@@ -15,6 +16,7 @@ const SchedulerContainer = styled.main`
     width: 1020px;
     margin: 0 auto;
     padding: 20px;
+    display: flex;
     @media (max-width: 1020px) {
         width: 100%;
     }
@@ -34,14 +36,14 @@ const Citas = ({ redirect, flash, date, userData, services, selectedService }) =
     return (
         <MainLayout title="Citas">
             <FullWidthDiv>
-                <SchedulerContainer>
-                    <h1>Agenda tu cita:</h1>
+                <SchedulerContainer>                    
                     <AppointmentForm 
                         {...userData} 
                         services={services} 
                         service={selectedService || ''}
                         date={date}
-                    />                                                          
+                    /> 
+                    <DentistsSvg />                                                         
                 </SchedulerContainer>                
             </FullWidthDiv>
             <AppointmentsFooter />

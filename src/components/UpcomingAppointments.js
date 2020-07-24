@@ -1,16 +1,23 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import ReactModal from 'react-modal';
+import { today } from '../utils/dateFunctions';
+import flasher from '../utils/flasher';
 
 ReactModal.setAppElement('body');
 
 import CancelConfirmation from './CancelConfirmation'
 import AppointmentInfoCard from './AppointmentInfoCard';
 
+const cancelarionSpan = 3540000; /* 59mn in ms */
+
 const UpcomingAppointments = ({ upcomingAppoinments }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedAppoinment, setSelectedAppointment] = useState({});
 
     const cancelAppointment = (appointment) => {
+        if((appointment.timeStamp - today()) < cancelarionSpan){
+            return flasher('Las citas solo pueden ser canceladas con más de 1 hora de anticipación', 'error')
+        }
         setSelectedAppointment(appointment);
         setModalOpen(true);        
     }
@@ -31,7 +38,7 @@ const UpcomingAppointments = ({ upcomingAppoinments }) => {
         </ReactModal>
         <div className="appointments">
             <h2>Próximas citas:</h2>
-            <small>* Las citas deben ser canceladas al menos 1 hora antes.</small>
+            <small>* Las citas deben ser canceladas con al menos 1 hora de anticipación.</small>
             {
                 upcomingAppoinments &&
                 Object.values(upcomingAppoinments).map(appointment =>
