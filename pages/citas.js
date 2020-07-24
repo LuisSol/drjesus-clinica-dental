@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { parseCookies } from 'nookies';
-import flasher from '../src/utils/flasher';
 import { verifyToken, getUserData, getUserFirestore, getServicesData } 
 from '../src/utils/firebaseAdmin';
+import flasher from '../src/utils/flasher';
 
 import MainLayout from '../src/components/MainLayout';
-import AppointmentsFooter from '../src/components/AppointmentsFooter'
-import AppointmentForm from '../src/components/AppointmentForm'
-import DentistsSvg from '../src/components/DentistsSvg'
+import AppointmentsFooter from '../src/components/citas/AppointmentsFooter';
+import AppointmentForm from '../src/components/citas/AppointmentForm';
+import DentistsSvg from '../src/components/citas/DentistsSvg';
 
 const FullWidthDiv = styled.div`
     width: 100%;

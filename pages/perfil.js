@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { parseCookies } from 'nookies';
 import { verifyToken, getUserData, getUserFirestore } from '../src/utils/firebaseAdmin';
-import flasher from '../src/utils/flasher';
-import { rtdb } from '../src/utils/firebase'
 import moment from 'moment';
-import { today } from '../src/utils/dateFunctions'
+import { today } from '../src/utils/dateFunctions';
+import flasher from '../src/utils/flasher';
+import { rtdb } from '../src/utils/firebase';
 
 moment.locale('es');
 
 import MainLayout from '../src/components/MainLayout';
-import AvatarForm from '../src/components/AvatarForm';
-import UserInfoForm from '../src/components/UserInfoForm';
-import UpcomingAppoinments from '../src/components/UpcomingAppointments';
-import HistoryAppointments from '../src/components/HistoryAppointments'
+import AvatarForm from '../src/components/perfil/AvatarForm';
+import UserInfoForm from '../src/components/perfil/UserInfoForm';
+import UpcomingAppoinments from '../src/components/perfil/UpcomingAppointments';
+import HistoryAppointments from '../src/components/perfil/HistoryAppointments'
 
 const FullWidthDiv = styled.div`
     width: 100%;

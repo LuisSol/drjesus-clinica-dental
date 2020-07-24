@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import useFormvalidation from '../utils/useFormValidation';
-import validateAppointmentForm from '../utils/validateAppointmentForm';
-import { today, dateFieldToEpoch, epochToDateField } from '../utils/dateFunctions';
 import moment from 'moment';
-import ReactModal from 'react-modal'
+import ReactModal from 'react-modal';
+import useFormvalidation from '../../utils/useFormValidation';
+import validateAppointmentForm from '../../utils/validateAppointmentForm';
+import { today, dateFieldToEpoch, epochToDateField } from '../../utils/dateFunctions';
 
 ReactModal.setAppElement('body');
 

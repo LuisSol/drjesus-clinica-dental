@@ -29,7 +29,7 @@ const SVGContainer = styled.div`
     width: 500px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-left: 2rem;
     img {
         opacity: .3;

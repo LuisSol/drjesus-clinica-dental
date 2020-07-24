@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import { rtdb } from '../utils/firebase';
-import flasher from '../utils/flasher'
+import { rtdb } from '../../utils/firebase';
+import flasher from '../../utils/flasher'
 
 const SchedulerContainer = styled.div`
     border: 1px solid #666;

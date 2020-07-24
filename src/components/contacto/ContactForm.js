@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import useFormValidation from '../utils/useFormValidation';
-import validateContactForm from '../utils/validateContactForm';
 import axios from 'axios';
-import flasher from '../utils/flasher';
+import flasher from '../../utils/flasher';
+import useFormValidation from '../../utils/useFormValidation';
+import validateContactForm from '../../utils/validateContactForm';
 
 const ContactFormStyled = styled.form`    
     margin-top: .5rem;

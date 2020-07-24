@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ReactModal from 'react-modal';
-import { today } from '../utils/dateFunctions';
-import flasher from '../utils/flasher';
+import { today } from '../../utils/dateFunctions';
+import flasher from '../../utils/flasher';
 
 ReactModal.setAppElement('body');
 
