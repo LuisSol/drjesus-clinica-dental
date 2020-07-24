@@ -1,9 +1,19 @@
-import { useState } from 'react'
-import styled from 'styled-components'
-import useFormvalidation from '../utils/useFormValidation'
-import validateAppointmentForm from '../utils/validateAppointmentForm'
+import { useState } from 'react';
+import styled from 'styled-components';
+import useFormvalidation from '../utils/useFormValidation';
+import validateAppointmentForm from '../utils/validateAppointmentForm';
+import { today, dateFieldToEpoch, epochToDateField } from '../utils/dateFunctions';
+import moment from 'moment';
+import ReactModal from 'react-modal'
 
-const AppointmenFields = styled.form`
+ReactModal.setAppElement('body');
+
+moment.locale('es');
+
+import Scheduler from './Scheduler'
+import AppointmentConfirmation from './AppointmentConfirmation'
+
+const AppointmenFields = styled.form`   
     label {
         display: block;
         margin-top: 1.2rem;        
@@ -27,18 +37,43 @@ const AppointmenFields = styled.form`
     }
 `
 
-const AppointmentForm = ({ name, phone, service, services }) => {
-    const [textDuration, setTextDuration] = useState('');
+const AppointmentForm = ({ date, name, phone, service, services, uid }) => {
+    const [serviceDuration, setServiceDuration] = useState(services[0].timeBlocks)
+    const [textDuration, setTextDuration] = useState(services[0].duration);
+    const [showConfirmation, setShowConfirmation] = useState(false)
+    const [selectedHour, setSelectedHour] = useState({});
 
     const onValidValues = () => {
-        console.log('valid values!!!')
+        setShowConfirmation(true);    
     }
-
-    const {handleSubmit, handleBlur, handleChange, values, errors} = 
-           useFormvalidation({ name, phone, service },validateAppointmentForm,onValidValues);
     
-    return (       
-        <AppointmenFields onSubmit={handleSubmit}>                        
+    const {handleSubmit, handleBlur, handleChange, values, errors} = 
+           useFormvalidation({ name, phone, 
+                               service: service || services[0].title, 
+                               date: date || epochToDateField(today()) },
+                               validateAppointmentForm, onValidValues);
+    
+    return (
+        <> 
+        <ReactModal 
+            isOpen={showConfirmation}
+            onRequestClose={() => setShowConfirmation(false)}
+            overlayClassName="appointment-confirmation-overlay"
+            className="appointment-confirmation-content"
+            closeTimeoutMS={200}
+        >
+            <AppointmentConfirmation
+                setShowConfirmation={setShowConfirmation}
+                uid={uid}
+                name={values.name}
+                phone={values.phone}
+                service={values.service}
+                date={values.date}
+                serviceDuration={serviceDuration}
+                selectedHour={selectedHour}
+            />  
+        </ReactModal>    
+        <AppointmenFields onSubmit={handleSubmit} >                        
             <label>
                 <span>A nombre de:</span>
                 <input 
@@ -76,7 +111,7 @@ const AppointmentForm = ({ name, phone, service, services }) => {
                     value={values.service}
                     // set the dataset values for the selected service
                     onChange={(e) => {
-                        console.log(e.target.selectedOptions[0].dataset.timeblocks);
+                        setServiceDuration(e.target.selectedOptions[0].dataset.timeblocks);
                         setTextDuration(e.target.selectedOptions[0].dataset.duration);
                         handleChange(e);
                     }}
@@ -99,10 +134,29 @@ const AppointmentForm = ({ name, phone, service, services }) => {
             </label> 
             <label>                
                 <span>Duración estimada: {textDuration}</span>
-            </label>                     
-        </AppointmenFields>
-        
-    )
+            </label>
+            <div>
+                <label>Fecha: </label>
+                <input 
+                    type="date" 
+                    value={values.date} 
+                    min={epochToDateField(today())}  
+                    onChange={handleChange}     
+                    id="date"
+                    name="date"                
+                />
+                <span>{moment(dateFieldToEpoch(values.date)).format('dddd LL')}</span>
+            </div> 
+            <small>* Una vez completados los datos selecciona la hora que deseas</small>                
+            <Scheduler 
+                currentDate={values.date}
+                currentServiceDuration={serviceDuration}
+                errors={errors}
+                setSelectedHour={setSelectedHour}
+            />                     
+        </AppointmenFields>  
+        </>      
+    )    
 }
 
 export default AppointmentForm;
