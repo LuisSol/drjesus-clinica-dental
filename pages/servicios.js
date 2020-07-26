@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { getServicesData } from '../src/utils/firebaseAdmin'
 
 import MainLayout from '../src/components/MainLayout';
 import ContactBigFooter from '../src/components/ContactBigFooter';
@@ -39,7 +40,7 @@ const RightColumn = styled.div`
     justify-content: center;
 `
 
-const Services = () => {
+const Services = ({ services }) => {
     return (
         <MainLayout title="Servicios">
             <FullWidthDiv>
@@ -48,16 +49,14 @@ const Services = () => {
                     <RowDiv>
                         <LeftColumn>
                             <ServiceCard 
-                                title="Consulta General"
-                                text="Holidfasfasfafadsfadsfadsfadsfadsfadsfadsfadsfdasfadsfadfdasfdasfa"
+                                {...services[0]}
                             > 
                                 <GeneralSvg />
                             </ServiceCard>                      
                         </LeftColumn>
                         <RightColumn>
                             <ServiceCard 
-                                title="Ortodoncia / Brackets"
-                                text="Holi"
+                                {...services[1]}
                             >
                                 <BracketsSvg />
                             </ServiceCard> 
@@ -66,16 +65,14 @@ const Services = () => {
                     <RowDiv>
                         <LeftColumn>
                             <ServiceCard 
-                                title="Endodoncia"
-                                text="Holi"
+                                {...services[2]}
                             >
                                 <EndoSvg />
                             </ServiceCard> 
                         </LeftColumn>
                         <RightColumn>
                             <ServiceCard 
-                                title="Implantes / Prótesis"
-                                text="Holi"
+                                {...services[3]}
                             >
                                 <ProtSvg />
                             </ServiceCard> 
@@ -84,8 +81,7 @@ const Services = () => {
                     <RowDiv>
                         <LeftColumn>
                             <ServiceCard 
-                                title="Cirugía dental"
-                                text="Holi"
+                               {...services[4]}
                             >
                                 <CirSvg />
                             </ServiceCard> 
@@ -96,6 +92,14 @@ const Services = () => {
             <ContactBigFooter />
         </MainLayout>
     )
+}
+
+export const getStaticProps = async () => {
+    const props = {};
+    const servicesData = await getServicesData();
+    props.services = []
+    servicesData.forEach(doc => props.services.push({...doc.data(), id: doc.id }));
+    return { props };
 }
 
 export default Services;

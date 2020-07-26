@@ -69,7 +69,7 @@ const DetailText = styled.div`
     }
 `
 
-const ServiceCard = ({ title, text, children }) => {
+const ServiceCard = ({ detail, link, title, children }) => {
     const [infoOpen, setInfoOpen] = useState(false);
     
     return (
@@ -82,8 +82,8 @@ const ServiceCard = ({ title, text, children }) => {
                 <DetailText 
                     className={infoOpen ?  'open' : ''}
                 >
-                    <p>{text}</p>
-                    <a href="/citas?" className="link-btn secundary-btn">
+                    <p>{detail}</p>
+                    <a href={link} className="link-btn secundary-btn">
                         Agendar cita
                     </a>
                 </DetailText>

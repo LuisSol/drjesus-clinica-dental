@@ -53,9 +53,11 @@ const AppointmenFields = styled.form`
     }
 `
 
-const AppointmentForm = ({ date, name, phone, service, services, uid }) => {
-    const [serviceDuration, setServiceDuration] = useState(services[0].timeBlocks)
-    const [textDuration, setTextDuration] = useState(services[0].duration);
+const AppointmentForm = ({ date, name, phone, selectedService, services, uid }) => {
+    const [serviceDuration, setServiceDuration] = 
+    useState(selectedService.timeBlocks || services[0].timeBlocks)
+    const [textDuration, setTextDuration] = 
+    useState(selectedService.duration || services[0].duration);
     const [showConfirmation, setShowConfirmation] = useState(false)
     const [selectedHour, setSelectedHour] = useState({});
 
@@ -65,7 +67,7 @@ const AppointmentForm = ({ date, name, phone, service, services, uid }) => {
     
     const {handleSubmit, handleBlur, handleChange, values, errors} = 
            useFormvalidation({ name, phone, 
-                               service: service || services[0].title, 
+                               service: selectedService.service || services[0].title, 
                                date: date || epochToDateField(today()) },
                                validateAppointmentForm, onValidValues);
     

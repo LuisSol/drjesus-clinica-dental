@@ -22,8 +22,7 @@ const SchedulerContainer = styled.main`
     }
 `
 
-const Citas = ({ redirect, flash, date, userData, services, selectedService }) => {         
-
+const Citas = ({ redirect, flash, date, userData, services, selectedService }) => {
     /* if the result is a redirect 
        due to present lack of getServerSide support for redirects from client side */
     if(redirect) {
@@ -32,7 +31,7 @@ const Citas = ({ redirect, flash, date, userData, services, selectedService }) =
         }
         return null;          
     }
-
+    console.log(selectedService)
     return (
         <MainLayout title="Citas">
             <FullWidthDiv>
@@ -40,7 +39,7 @@ const Citas = ({ redirect, flash, date, userData, services, selectedService }) =
                     <AppointmentForm 
                         {...userData} 
                         services={services} 
-                        service={selectedService || ''}
+                        selectedService={selectedService || {}}
                         date={date}
                     /> 
                     <DentistsSvg />                                                         
@@ -51,8 +50,15 @@ const Citas = ({ redirect, flash, date, userData, services, selectedService }) =
     )
 }
 
-export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {    
     const props = {}
+    if(ctx.query.service && ctx.query.duration && ctx.query.time) {
+        props.selectedService = {
+            service: ctx.query.service,
+            duration: ctx.query.duration,
+            timeBlocks: ctx.query.time
+        };
+    }         
     const { auth } =  parseCookies(ctx);
     if(!auth) {
         props.redirect = '/ingresar'
@@ -63,7 +69,7 @@ export const getServerSideProps = async (ctx) => {
     }
     else {
         try {
-            const { uid} = await verifyToken(auth);
+            const { uid } = await verifyToken(auth);
             // valid Token
             // retrieve data from the database
             const [userAuthData, userFireStoreData, servicesData] = await Promise.all([

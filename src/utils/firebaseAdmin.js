@@ -28,5 +28,5 @@ export const getUserFirestore = (uid) => {
 }
 
 export const getServicesData = () => {
-    return admin.firestore().collection('services').get();
+    return admin.firestore().collection('services').orderBy('id').get();
 }
