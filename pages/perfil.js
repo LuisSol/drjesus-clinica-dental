@@ -13,7 +13,8 @@ import MainLayout from '../src/components/MainLayout';
 import AvatarForm from '../src/components/perfil/AvatarForm';
 import UserInfoForm from '../src/components/perfil/UserInfoForm';
 import UpcomingAppoinments from '../src/components/perfil/UpcomingAppointments';
-import HistoryAppointments from '../src/components/perfil/HistoryAppointments'
+import HistoryAppointments from '../src/components/perfil/HistoryAppointments';
+import ContactBigFooter from '../src/components/ContactBigFooter';
 
 const FullWidthDiv = styled.div`
     width: 100%;
@@ -81,6 +82,7 @@ const Profile = ({ redirect, flash, userData }) => {
                     <HistoryAppointments pastAppoinments={pastAppoinments} />                   
                 </ProfileContainer>
             </FullWidthDiv>
+            <ContactBigFooter />
         </MainLayout>
     )
 }

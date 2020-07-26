@@ -62,13 +62,14 @@ const BigFooterContainer = styled.footer`
     }
 `
 
-const AppointmentsFooter = () => (
+const ContactFooter = () => (
     <BigFooterContainer>
-        <img src="/images/citas_footer.jpg" alt="servicio en el dentista" />
+        <img src="/images/contact_footer.jpg" alt="servicio en el dentista" />
         <div className="title-container">
-            <h1>CONOCE NUESTROS<br />SERVICIOS</h1>
-            <h2>Necesitas más información ?<br />conoce los detalles aquí:</h2>
-            <Link href="/servicios">
+            <h1>TIENES DUDAS ?</h1>
+            <h2>Contáctanos.</h2>
+            <h2>Estaremos felices de ayudarte a resolverlas.</h2>
+            <Link href="/contacto">
                 <a className="link-btn secundary-btn">Más información</a>
             </Link>
         </div>
@@ -77,4 +78,4 @@ const AppointmentsFooter = () => (
 )
 
 
-export default AppointmentsFooter;
+export default ContactFooter;
