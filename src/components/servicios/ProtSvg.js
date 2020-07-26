@@ -1,4 +1,14 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const armsAnimation = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(5deg);
+    }
+`
+
 
 const SvgContainer = styled.div`   
     position: absolute;
@@ -7,6 +17,14 @@ const SvgContainer = styled.div`
     svg {
         align-self: flex-end;
         height: 85%;
+    }
+    #protoArms {
+        transform-origin: right top;
+        transform-box: fill-box;
+        animation: ${armsAnimation} 3s ease-in-out infinite alternate;
+    }
+    #eyes {
+        transform: translate(-6px, -10px);
     }
 `
 

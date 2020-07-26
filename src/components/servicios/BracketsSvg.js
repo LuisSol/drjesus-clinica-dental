@@ -1,4 +1,16 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const leftToothAnimation = keyframes`
+    0% {
+        transform: translateX(0);
+    }
+    50%,60% {
+        transform: translateX(-20px);
+    }    
+    100% {
+        transform: translateX(20px);
+    }
+`
 
 const SvgContainer = styled.div`   
     position: absolute;
@@ -7,6 +19,16 @@ const SvgContainer = styled.div`
     svg {
         align-self: flex-end;
         height: 85%;
+    }
+    #leftTooth {
+        transform-origin: right;
+        transform-box: fill-box;
+        animation: ${leftToothAnimation} 6s ease-in-out infinite alternate;
+    }
+    #rightTooth {
+        transform-origin: right;
+        transform-box: fill-box;
+        animation: ${leftToothAnimation} 6s ease-in-out 100ms infinite alternate;
     }
 `
 

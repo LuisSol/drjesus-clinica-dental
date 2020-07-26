@@ -1,4 +1,22 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const headAnimation = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(9deg);
+    }
+`
+const brushAnimation = keyframes`
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-2px);
+        
+    }
+`
 
 const SvgContainer = styled.div`   
     position: absolute;
@@ -7,6 +25,21 @@ const SvgContainer = styled.div`
     svg {
         align-self: flex-end;
         height: 100%;
+    }
+    #head {
+        transform-origin: right;
+        transform-box: fill-box;
+        animation: ${headAnimation} 2s ease-in-out infinite alternate;
+    }
+    #fileArm {
+        transform-origin: right;
+        transform-box: fill-box;
+        animation: ${headAnimation} 2s ease-in-out 200ms infinite alternate; 
+    }
+    #brush {
+        transform-origin: left;
+        transform-box: fill-box;
+        animation: ${brushAnimation} 2s ease-in-out infinite alternate;s
     }
 `
 

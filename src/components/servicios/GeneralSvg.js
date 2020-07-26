@@ -1,4 +1,21 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const magnifiarAnimation = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(5deg);
+    }
+`
+const pickAnimation = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-5deg);
+    }
+`
 
 const SvgContainer = styled.div`   
     position: absolute;
@@ -7,6 +24,16 @@ const SvgContainer = styled.div`
     svg {
         align-self: flex-end;
         height: 80%;
+    }
+    #magniArms {
+        transform-origin: right;
+        transform-box: fill-box;
+        animation: ${magnifiarAnimation} 2s ease-in-out infinite alternate;
+    }
+    #pickArms {
+        transform-origin: left;
+        transform-box: fill-box;
+        animation: ${pickAnimation} 3s ease-in-out 200ms infinite alternate;
     }
 `
 
