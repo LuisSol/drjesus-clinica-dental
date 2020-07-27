@@ -143,6 +143,15 @@ const DropDownItem = styled.div`
     display: flex;
     align-items: center;
     padding-left: .7rem;
+    img {
+        width: 15px;
+        height: 15px;
+        margin: 0;
+        margin-right: .3rem;
+    }
+    img.profile {
+        border-radius: 50%;
+    }
     &:hover {
         background-color: #eee;
     }
@@ -202,13 +211,32 @@ const Navigation = () => {
                     ?
                         <>                            
                             <Link href="/perfil">                                    
-                                <a><DropDownItem>Perfil</DropDownItem></a>                                    
+                                <a>
+                                    <DropDownItem>
+                                        <img 
+                                            src={user.photoURL || '/images/logo.svg'} 
+                                            alt="imagén de perfil" 
+                                            className="profile"
+                                        />
+                                        Perfil
+                                    </DropDownItem>
+                                </a>                                    
                             </Link>                               
-                            <a href="#" onClick={() => logout()}><DropDownItem>Salir</DropDownItem></a>                              
+                            <a href="#" onClick={() => logout()}>
+                                <DropDownItem>
+                                    <img src={'/images/logout.svg'} alt="Salir" />
+                                    Salir
+                                </DropDownItem>
+                            </a>                              
                         </>                        
                     :                                        
                     <Link href="/ingresar">                                    
-                        <a><DropDownItem>Ingresar</DropDownItem></a>                                    
+                        <a>
+                            <DropDownItem>
+                                <img src={'/images/login.svg'} alt="Salir" />
+                                Ingresar
+                            </DropDownItem>
+                        </a>                                    
                     </Link>                      
                 }    
                 </DropDown>

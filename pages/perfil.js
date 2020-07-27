@@ -27,6 +27,7 @@ const ProfileContainer = styled.main`
     flex-direction: column;
     align-items: center;
     font-weight: 300;
+    margin-bottom: 2rem;
     .title, .appointments, .past  {
         align-self: flex-start;
         width: 100%;
