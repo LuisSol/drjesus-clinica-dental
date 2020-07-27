@@ -67,6 +67,9 @@ const DetailText = styled.div`
     a {
         width: 100%;
     }
+    @media(max-width: 370px) {
+        width: 270px;
+    }
 `
 
 const ServiceCard = ({ detail, link, title, children }) => {

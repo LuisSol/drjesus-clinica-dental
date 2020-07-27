@@ -31,7 +31,7 @@ const Citas = ({ redirect, flash, date, userData, services, selectedService }) =
         }
         return null;          
     }
-    console.log(selectedService)
+    
     return (
         <MainLayout title="Citas">
             <FullWidthDiv>

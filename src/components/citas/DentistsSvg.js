@@ -31,8 +31,10 @@ const SVGContainer = styled.div`
     flex-direction: column;
     justify-content: space-around;
     margin-left: 2rem;
+    align-items: flex-end;
     img {
         opacity: .3;
+        width: 85%;        
     }
     svg {
         width: 100%;
