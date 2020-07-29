@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import useFormValidation from '../utils/useFormValidation';
-import validateUserInfo from '../utils/validateUserInfo';
-import flasher from '../utils/flasher';
 import { useSelector } from 'react-redux';
-import { auth, db } from '../utils/firebase';
-import Nprogress from 'nprogress'
+import Nprogress from 'nprogress';
+import useFormValidation from '../../utils/useFormValidation';
+import validateUserInfo from '../../utils/validateUserInfo';
+import flasher from '../../utils/flasher';
+import { auth, db } from '../../utils/firebase';
 
 const usersRef = db.collection('users');
 const InfoForm = styled.form`       

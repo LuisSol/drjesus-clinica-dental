@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import ContactHeader from '../src/components/ContactHeader';
-import MidBanner from '../src/components/ContactMidBanner';
+import ContactHeader from '../src/components/contacto/ContactHeader';
+import MidBanner from '../src/components/contacto/ContactMidBanner';
 import MainLayout from '../src/components/MainLayout';
 import BigFooter from '../src/components/BigFooter'
 

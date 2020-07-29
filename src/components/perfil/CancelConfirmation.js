@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import { rtdb } from '../utils/firebase'
+import styled from 'styled-components';
 import Nprogress from 'nprogress'
-import flasher from '../utils/flasher'
+import flasher from '../../utils/flasher';
+import { rtdb } from '../../utils/firebase';
 
 const root = rtdb.ref();
 

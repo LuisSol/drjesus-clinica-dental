@@ -13,9 +13,9 @@ const makeStore = (ctx) => {
     auth.onAuthStateChanged(async (user) => {
         if(user) {
             // log in
-            const token = await user.getIdToken();
-            setCookie(ctx, cookieName, token, { maxAge: 60 * 60 * 24, path: '/' });
-            store.dispatch( loginUser(user) );
+            const { xa, photoURL, uid, displayName, email, refreshToken } = user;
+            setCookie(ctx, cookieName, JSON.stringify({ xa, uid, refreshToken }), { maxAge: 60 * 60 * 24, path: '/' });
+            store.dispatch( loginUser({ photoURL, uid, displayName, email}) );            
         }
         else {
             // log out

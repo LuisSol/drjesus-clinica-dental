@@ -20,6 +20,7 @@ const BigFooterContainer = styled.footer`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: top;
         z-index: -1;
     }
     .title-container {
@@ -61,13 +62,14 @@ const BigFooterContainer = styled.footer`
     }
 `
 
-const appointmentsFooter = () => (
+const ContactFooter = () => (
     <BigFooterContainer>
-        <img src="/images/HERO5.jpg" alt="sonrisas" />
+        <img src="/images/contact_footer.jpg" alt="servicio en el dentista" />
         <div className="title-container">
-            <h1>CONOCE NUESTROS <br />SERVICIOS</h1>
-            <h2>Necesitas más información ? conoce los detalles aquí:</h2>
-            <Link href="/servicios">
+            <h1>TIENES DUDAS ?</h1>
+            <h2>Contáctanos.</h2>
+            <h2>Estaremos felices de ayudarte a resolverlas.</h2>
+            <Link href="/contacto">
                 <a className="link-btn secundary-btn">Más información</a>
             </Link>
         </div>
@@ -76,4 +78,4 @@ const appointmentsFooter = () => (
 )
 
 
-export default appointmentsFooter;
+export default ContactFooter;

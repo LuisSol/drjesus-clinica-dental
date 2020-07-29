@@ -1,13 +1,14 @@
 import { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import { rtdb } from '../utils/firebase';
-import flasher from '../utils/flasher'
+import { rtdb } from '../../utils/firebase';
+import flasher from '../../utils/flasher';
+import { epochToDateField, dateFieldToEpoch } from '../../utils/dateFunctions';
 
 const SchedulerContainer = styled.div`
     border: 1px solid #666;
     border-radius: 10px;
     margin: 2rem 0;
-    width: 50%;
+    width: 100%;
     overflow: hidden;
     button:last-child {
        border: 0;
@@ -45,7 +46,7 @@ const TimeBlock = styled.div`
     right: 0;
     bottom: 0;
     background-color: #1b3891;    
-    z-index: 10;
+    z-index: 6;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,9 +61,14 @@ const dayPlaceHolder = [
     {hour: '7_00pm'}, {hour: '7_30pm'},
 ];
 
+const msDayStart = 32400000; /* 9:00am in ms */
+const msTimeBlock = 1800000; /* 30mn in ms */
+
 const Scheduler = ({ currentDate, currentServiceDuration, errors, setSelectedHour }) => {
     const [dayAppointments, setDayAppointments] = useState(dayPlaceHolder);
     let dayRef = useMemo(() => rtdb.ref(`days/${currentDate}`), [currentDate]);
+    // to disable past hours
+    let isToday = useMemo(() => epochToDateField(Date.now()) === currentDate,[currentDate]);    
 
     useEffect(() => {
         dayRef.on('value', snap => {
@@ -76,7 +82,14 @@ const Scheduler = ({ currentDate, currentServiceDuration, errors, setSelectedHou
     const handleClick = (e) => {        
         let selectedHourIndex = parseInt(e.target.dataset.index);
         let timeSpanNeeded = parseInt(currentServiceDuration) + selectedHourIndex;
+        let isPastHour = (isToday && Date.now() > (dateFieldToEpoch(currentDate) + msDayStart + (msTimeBlock * selectedHourIndex)))
         
+        /* Validation for past hours */
+        if (isPastHour) {
+            flasher('La hora que elegiste ya pasó', 'error');
+            e.preventDefault();  
+            return;
+        }
         /* Validate selected hour according to the seleted service */
         if (timeSpanNeeded > dayAppointments.length) {
             flasher('La hora que elegiste para tu servicio supera el horario de trabajo', 'error');
@@ -108,8 +121,8 @@ const Scheduler = ({ currentDate, currentServiceDuration, errors, setSelectedHou
             dayAppointments.map((time, index) => {                
                 const timeBlocks = !time.appointment 
                                    ? null
-                                   : Object.values(time.appointment)[0].timeBlocks                                   
-                        
+                                   : Object.values(time.appointment)[0].timeBlocks;                
+
                 return (
                     <TimeUnit
                         data-index={index} 
@@ -123,7 +136,7 @@ const Scheduler = ({ currentDate, currentServiceDuration, errors, setSelectedHou
                             <TimeBlock style={{height: 32*timeBlocks}}>
                                 No disponible
                             </TimeBlock>
-                        }
+                        }                       
                     </TimeUnit>
             )})           
         }         

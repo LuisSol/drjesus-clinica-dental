@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { storage, auth } from '../utils/firebase';
 import NProgress from 'nprogress';
-import flasher from '../utils/flasher';
+import flasher from '../../utils/flasher';
+import { storage, auth } from '../../utils/firebase';
 
 const Container = styled.div`
     display: flex;
