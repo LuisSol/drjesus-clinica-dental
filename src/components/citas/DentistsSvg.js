@@ -34,7 +34,7 @@ const SVGContainer = styled.div`
     align-items: flex-end;
     img {
         opacity: .3;
-        width: 85%;        
+        width: 70%;        
     }
     svg {
         width: 100%;

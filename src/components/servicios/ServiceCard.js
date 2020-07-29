@@ -65,6 +65,7 @@ const DetailText = styled.div`
         opacity: 1;        
     }
     a {
+        margin-top: 2rem;
         width: 100%;
     }
     @media(max-width: 370px) {
