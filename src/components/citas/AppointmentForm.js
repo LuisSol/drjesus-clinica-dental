@@ -164,7 +164,7 @@ const AppointmentForm = ({ date, name, phone, selectedService, services, uid }) 
                     id="date"
                     name="date"                
                 />
-                <span className="date">{moment(dateFieldToEpoch(values.date)).format('dddd LL')}</span>
+                <span className="date">{moment(dateFieldToEpoch(values.date)+20000000).format('dddd LL')}</span>
             </div>
             <br /> 
             <small>* Una vez completados los datos selecciona la hora que deseas</small>                
