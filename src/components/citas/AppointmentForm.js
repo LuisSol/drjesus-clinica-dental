@@ -4,7 +4,7 @@ import moment from 'moment';
 import ReactModal from 'react-modal';
 import useFormvalidation from '../../utils/useFormValidation';
 import validateAppointmentForm from '../../utils/validateAppointmentForm';
-import { today, dateFieldToEpoch, epochToDateField } from '../../utils/dateFunctions';
+import { today, dateFieldToEpoch, epochToDateField, oneYearFromNow } from '../../utils/dateFunctions';
 
 ReactModal.setAppElement('body');
 
@@ -159,7 +159,8 @@ const AppointmentForm = ({ date, name, phone, selectedService, services, uid }) 
                 <input 
                     type="date" 
                     value={values.date} 
-                    min={epochToDateField(today())}  
+                    min={epochToDateField(today())}
+                    max={epochToDateField(oneYearFromNow())}  
                     onChange={handleChange}     
                     id="date"
                     name="date"                
