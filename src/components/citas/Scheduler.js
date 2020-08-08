@@ -54,7 +54,7 @@ const TimeBlock = styled.div`
 `
 
 const dayPlaceHolder = [
-    {hour: '9_00am'}, {hour: '9_30am'}, {hour: '10_00am'}, {hour: '10_30am'}, {hour: '11_00am'},
+    {hour: '10_00am'}, {hour: '10_30am'}, {hour: '11_00am'},
     {hour: '11_30am'}, {hour: '12_00pm'}, {hour: '12_30pm'}, {hour: '1_00pm'}, {hour: '1_30pm'}, 
     {hour: '2_00pm'}, {hour: '2_30pm'}, {hour: '3_00pm'}, {hour: '3_30pm'}, {hour: '4_00pm'},
     {hour: '4_30pm'}, {hour: '5_00pm'}, {hour: '5_30pm'}, {hour: '6_00pm'}, {hour: '6_30pm'},
