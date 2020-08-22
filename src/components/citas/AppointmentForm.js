@@ -206,6 +206,7 @@ const AppointmentForm = ({
           <AdminDashboard
             setServiceDuration={setServiceDuration}
             setValues={setValues}
+            currentDate={values.date}
           />
         )}
         <Scheduler
