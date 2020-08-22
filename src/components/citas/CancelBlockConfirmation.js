@@ -23,9 +23,9 @@ const CalcelContainer = styled.div`
   }
 `;
 
-const CancelConfirmation = ({ selectedAppoinment, setModalOpen }) => {
+const CancelConfirmation = ({ cancelPaths, setModalOpen }) => {
   const processCancelation = () => {
-    const updateObj = selectedAppoinment.cancelPaths.reduce((accu, item) => {
+    const updateObj = cancelPaths.reduce((accu, item) => {
       return { ...accu, [item]: null };
     }, {});
     Nprogress.start();
@@ -44,7 +44,7 @@ const CancelConfirmation = ({ selectedAppoinment, setModalOpen }) => {
 
   return (
     <CalcelContainer>
-      Estas seguro que deseas cancelar tu cita ?
+      Estas seguro que deseas cancelar esta cita ?
       <div className="btn-container">
         <button
           className="link-btn primary-btn"
